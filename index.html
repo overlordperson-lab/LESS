@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14213D">
+<title>Мій день: уроки, тривоги, світло</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F7FC;--grid:#DCE6F3;--ink:#14213D;--soft:#5B6B88;--blue:#2447C8;--green:#16895A;--off:#8A96AD;--red:#E0453A;--mark:#FFE98A;--line:#C9D6EA;--card:#ffffffb8;--accent:var(--off);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--bg:#0B1428;--grid:#13244A;--ink:#E8EEF9;--soft:#9AAAC7;--blue:#7FA8FF;--green:#4ED6A0;--off:#6D7B99;--red:#FF7A6B;--mark:#5A4B12;--line:#223764;--card:#14264acc}}
+:root[data-theme=dark]{color-scheme:dark;--bg:#0B1428;--grid:#13244A;--ink:#E8EEF9;--soft:#9AAAC7;--blue:#7FA8FF;--green:#4ED6A0;--off:#6D7B99;--red:#FF7A6B;--mark:#5A4B12;--line:#223764;--card:#14264acc}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:Onest,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45;background:linear-gradient(var(--grid) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/24px 24px,var(--bg)}
+body[data-state=lesson]{--accent:var(--blue)}body[data-state=break]{--accent:var(--green)}
+.glow{position:fixed;top:-140px;left:50%;width:440px;height:440px;margin-left:-220px;border-radius:50%;background:var(--accent);filter:blur(90px);opacity:.22;transition:background-color .8s;pointer-events:none}
+.top,main{position:relative;max-width:560px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 18px 0}
+.clock{font:700 1.7rem Unbounded,Onest,sans-serif;font-variant-numeric:tabular-nums}
+.date{color:var(--soft);font-size:.9rem}
+#theme{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1.2rem;cursor:pointer;transition:transform .4s}
+#theme:hover{transform:rotate(180deg)}
+main{padding:8px 18px 130px}
+.view{display:none}
+.view.on{display:block;animation:in .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes in{from{opacity:0;transform:translateX(var(--dx,28px))}}
+@keyframes rw{from{opacity:0;transform:translateY(10px)}}
+h2{font-size:1.05rem;margin:26px 0 8px}
+.chips{display:flex;gap:8px;padding:6px 0 4px}
+.chips button{flex:1;padding:9px 0;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:600 .9rem Onest,sans-serif;cursor:pointer;transition:.25s}
+.chips .a{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips .t{box-shadow:inset 0 -3px 0 var(--red)}
+.state{margin:18px 0 0;font-weight:600;color:var(--soft)}
+.subject{margin:4px 0 0;font:700 1.5rem/1.2 Unbounded,Onest,sans-serif;text-wrap:balance}
+.dial{position:relative;width:min(78vw,320px);aspect-ratio:1;margin:18px auto 6px}
+.dial svg{width:100%;height:100%;transform:rotate(-90deg)}
+.tk{stroke:var(--line);stroke-width:1.4}.tk.m{stroke:var(--soft);stroke-width:2}
+.track{fill:none;stroke:var(--line);stroke-width:10}
+.bar{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;stroke-dasharray:565.49;stroke-dashoffset:565.49;transition:stroke-dashoffset .9s linear,stroke .8s;filter:drop-shadow(0 0 6px color-mix(in srgb,var(--accent) 60%,transparent))}
+.inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 16%}
+.count{font:700 clamp(2rem,11vw,3.2rem) Unbounded,Onest,sans-serif;font-variant-numeric:tabular-nums}
+.cl{font-size:.9rem;color:var(--soft)}
+.pulse{animation:pl .9s}
+@keyframes pl{40%{transform:scale(1.05)}}
+.foot{text-align:center;margin:4px 0 0;color:var(--soft)}
+.strip{position:relative;height:56px;border-radius:14px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.blk{position:absolute;top:8px;bottom:8px;display:grid;place-items:center;border-radius:8px;background:var(--line);color:var(--soft);font-size:.85rem;transition:background .5s,color .5s;animation:rw .5s both;animation-delay:calc(var(--i)*50ms)}
+.blk.d{background:color-mix(in srgb,var(--accent) 30%,var(--line))}
+.blk.c{background:var(--accent);color:#fff}
+.mk{position:absolute;top:0;bottom:0;width:2px;background:var(--red);transition:left 1s linear}
+.lab{display:flex;justify-content:space-between;font-size:.75rem;color:var(--soft);margin-top:4px}
+.sheet{position:relative;padding-left:44px;margin:0;list-style:none}
+.sheet::before{content:"";position:absolute;left:34px;top:0;bottom:0;width:2px;background:var(--red)}
+.sheet li{position:relative;display:flex;gap:12px;align-items:baseline;padding:10px 8px 10px 0;border-bottom:1px solid var(--line);animation:rw .45s both;animation-delay:calc(var(--i)*45ms)}
+.sheet .n{position:absolute;left:-44px;width:28px;text-align:right;font-weight:600;color:var(--soft)}
+.sheet .t{margin-left:auto;color:var(--soft);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sheet .now{background:var(--mark);font-weight:600}
+.mapbox{position:relative;height:66vh;min-height:380px;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(100deg,var(--card) 30%,var(--line) 50%,var(--card) 70%) 0 0/300% 100%;animation:sh 1.6s infinite linear}
+@keyframes sh{to{background-position:-300% 0}}
+.mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn{display:inline-block;padding:12px 16px;border-radius:14px;background:var(--ink);color:var(--bg);font:600 1rem Onest,sans-serif;text-decoration:none;border:1px solid var(--ink);cursor:pointer;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.g{background:var(--card);color:var(--ink);border-color:var(--line)}
+.note{font-size:.85rem;color:var(--soft);margin:10px 0 0}
+.src{display:flex;gap:8px;align-items:center;font-size:.85rem;color:var(--soft)}
+.dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--off)}
+.dot.ok{background:var(--green)}.dot.err{background:var(--red)}.dot.load{animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.2}}
+.warn{color:var(--red);font-weight:600}
+.gcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.gh{display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.bdg{padding:4px 12px;border-radius:99px;font-size:.8rem;color:#fff;background:var(--green);transition:background .4s}.bdg.x{background:var(--red)}
+.gm{font:700 1.4rem Unbounded,Onest,sans-serif;margin:10px 0 2px}
+.gs{margin:0 0 14px;color:var(--soft)}
+.tl{position:relative;height:26px;border-radius:9px;overflow:hidden;background:color-mix(in srgb,var(--green) 28%,transparent)}
+.seg{position:absolute;top:0;bottom:0;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.2,.8,.2,1) var(--d,0s)}
+.go .seg{transform:scaleX(1)}
+.nm{position:absolute;top:0;bottom:0;width:3px;margin-left:-1.5px;background:var(--ink);transition:left 1s linear}
+.gt{margin:12px 0 0;font-size:.9rem;color:var(--soft)}
+.tabs{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(92vw,420px);display:grid;grid-template-columns:repeat(3,1fr);padding:6px;border-radius:24px;background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);box-shadow:0 10px 30px #0003;z-index:5}
+.pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/3);border-radius:18px;background:var(--ink);transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
+.tabs button{position:relative;z-index:1;background:none;border:0;padding:9px 0 7px;color:var(--soft);font:600 .75rem Onest,sans-serif;display:grid;justify-items:center;gap:2px;cursor:pointer;transition:color .3s}
+.tabs button.a{color:var(--bg)}
+.tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body data-state="off">
+<div class="glow"></div>
+<header class="top">
+  <div><div class="clock" id="clock">--:--</div><div class="date" id="date"></div></div>
+  <button id="theme" aria-label="Змінити тему">◐</button>
+</header>
+<main>
+  <section class="view on" id="v0">
+    <div class="chips" id="chips"></div>
+    <p class="state" id="state"></p>
+    <h1 class="subject" id="subject"></h1>
+    <div class="dial" id="dial">
+      <svg viewBox="0 0 220 220" aria-hidden="true"><g id="ticks"></g><circle class="track" cx="110" cy="110" r="90"/><circle class="bar" id="bar" cx="110" cy="110" r="90"/></svg>
+      <div class="inner"><div class="count" id="count">--:--</div><div class="cl" id="cl"></div></div>
+    </div>
+    <p class="foot" id="foot"></p>
+    <h2>День на одній смужці</h2>
+    <div class="strip" id="strip"></div>
+    <div class="lab"><span>08:30</span><span>16:20</span></div>
+    <h2 id="dayTitle"></h2>
+    <ol class="sheet" id="list"></ol>
+  </section>
+
+  <section class="view" id="v1">
+    <h2 style="margin-top:14px">Мапа тривог</h2>
+    <div class="mapbox"><iframe id="map" title="Мапа повітряних тривог" loading="lazy" referrerpolicy="no-referrer"></iframe></div>
+    <div class="row">
+      <button class="btn" id="mapReload">Оновити мапу</button>
+      <a class="btn g" href="https://map.ukrainealarm.com/" target="_blank" rel="noopener">Відкрити окремо</a>
+      <a class="btn g" href="https://alerts.in.ua" target="_blank" rel="noopener">alerts.in.ua</a>
+    </div>
+    <p class="note">Офіційна мапа «Повітряна тривога». Якщо вона не показується всередині сторінки, відкрий її кнопкою «Відкрити окремо».</p>
+  </section>
+
+  <section class="view" id="v2">
+    <h2 style="margin-top:14px">Світло: підчерги 3.1 та 5.1</h2>
+    <div class="src"><span class="dot load" id="ldot"></span><span id="ltxt">Завантаження…</span></div>
+    <p class="note warn" id="lwarn"></p>
+    <div id="groups"></div>
+    <div class="row">
+      <button class="btn" id="lreload">Оновити графік</button>
+      <a class="btn g" href="https://hoe.com.ua/page/pogodinni-vidkljuchennja" target="_blank" rel="noopener">Сайт Хмельницькобленерго</a>
+    </div>
+  </section>
+</main>
+
+<nav class="tabs" aria-label="Розділи">
+  <span class="pill" id="pill"></span>
+  <button class="a" data-t="0" aria-current="page"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0-6 6v3.5L4 16h16l-2-3.5V9a6 6 0 0 0-6-6zM10 19a2 2 0 0 0 4 0"/></svg>Уроки</button>
+  <button data-t="1"><svg viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3zM12 10v5M12 18v.01"/></svg>Тривоги</button>
+  <button data-t="2"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>Світло</button>
+</nav>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s),pad=n=>String(n).padStart(2,"0"),hm=m=>pad(m/60|0)+":"+pad(m%60);
+const LS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+// Дзвінки: [год, хв початку, год, хв кінця]
+const B=[[8,30,9,15],[9,25,10,10],[10,20,11,5],[11,15,12,0],[12,55,13,40],[13,45,14,30],[14,40,15,25],[15,35,16,20]];
+// Розклад (1=пн…5=пт). 8 елементів = уроки №1…№8, null = уроку немає. Назви можна міняти.
+const W={
+1:["Інформатика","Інформатика","Штучний інтелект / Теорія чисел","Іст/го","Теорія чисел / Електрон.","Алгебра","Природн.","STEM-проєкт"],
+2:["Інформатика","Соц. здоров’я","Природн.","Укр. мова","Англійська","Захист України","Захист України","Мова прост."],
+3:["Іст/го","Технології","Геометрія","Геометрія","Англійська","Укр. література","Фізкультура",null],
+4:["Іст/го","Природн.","Фізкультура","Укр. мова","Мистецтво","Права-обов.","Укр. література",null],
+5:["Електрон. / Штучний інтелект","Англійська","Алгебра","Алгебра","Природн.","Фізкультура",null,null]};
+const DAY=["Неділя","Понеділок","Вівторок","Середа","Четвер","П’ятниця","Субота"],SH=["Нд","Пн","Вт","Ср","Чт","Пт","Сб"];
+const WHEN=["","у понеділок","у вівторок","у середу","у четвер","у п’ятницю"];
+const MON=["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
+const lessonsOf=d=>(W[d]||[]).map((s,i)=>s?{n:i+1,s,st:B[i][0]*60+B[i][1],en:B[i][2]*60+B[i][3]}:null).filter(Boolean);
+const dur=m=>{m=Math.max(1,Math.round(m));const h=m/60|0,r=m%60;return h?h+" год"+(r?" "+r+" хв":""):r+" хв"};
+function fmt(s){s=Math.max(0,Math.floor(s));const h=s/3600|0,m=s%3600/60|0;return(h?h+":"+pad(m):pad(m))+":"+pad(s%60)}
+
+function status(now){
+  const d=now.getDay(),sec=now.getHours()*3600+now.getMinutes()*60+now.getSeconds(),L=lessonsOf(d);
+  if(L.length){
+    const f=L[0],la=L[L.length-1];
+    if(sec<f.st*60)return{mode:"off",state:"Уроки ще не почалися",subject:"Урок "+f.n+": "+f.s,cl:"до початку першого уроку",rem:f.st*60-sec,p:null,foot:"Початок о "+hm(f.st),hl:f.n,day:d};
+    if(sec<la.en*60)for(let i=0;i<L.length;i++){
+      const l=L[i],nx=L[i+1];
+      if(sec>=l.st*60&&sec<l.en*60)return{mode:"lesson",state:"Урок "+l.n,subject:l.s,cl:"до кінця уроку",rem:l.en*60-sec,p:(sec-l.st*60)/((l.en-l.st)*60),foot:nx?"Далі: "+nx.s+" о "+hm(nx.st):"Це останній урок на сьогодні",hl:l.n,day:d};
+      if(nx&&sec>=l.en*60&&sec<nx.st*60)return{mode:"break",state:l.n===4&&nx.n===5?"Ланч-перерва":"Перерва",subject:"Далі: урок "+nx.n+" — "+nx.s,cl:"до початку уроку",rem:nx.st*60-sec,p:(sec-l.en*60)/((nx.st-l.en)*60),foot:"Урок почнеться о "+hm(nx.st),hl:nx.n,day:d};
+    }
+  }
+  let o=1;while(!W[(d+o)%7])o++;
+  const nd=(d+o)%7,f=lessonsOf(nd)[0];
+  return{mode:"off",state:L.length?"Уроки на сьогодні закінчилися":"Вихідний",subject:"Наступний урок "+(o===1?"завтра":WHEN[nd])+" о "+hm(f.st)+": "+f.s,cl:"до початку уроків",rem:o*86400-sec+f.st*60,p:null,foot:"",hl:null,day:nd};
+}
+
+/* ---------- Уроки ---------- */
+const C=2*Math.PI*90;let selDay=null,lastKey="",lastDay="";
+$("#ticks").innerHTML=Array.from({length:60},(_,i)=>{const a=i*Math.PI/30,r=i%5?106:102;return`<line class="tk${i%5?"":" m"}" x1="${110+Math.cos(a)*108}" y1="${110+Math.sin(a)*108}" x2="${110+Math.cos(a)*r}" y2="${110+Math.sin(a)*r}"/>`}).join("");
+$("#chips").innerHTML=[1,2,3,4,5].map(d=>`<button data-d="${d}">${SH[d]}</button>`).join("");
+$("#chips").onclick=e=>{const b=e.target.closest("button");if(b){selDay=+b.dataset.d===selDay?null:+b.dataset.d;lastDay="";tick()}};
+
+function renderDay(d,hl){
+  $("#dayTitle").textContent="Розклад: "+DAY[d];
+  const L=lessonsOf(d);
+  $("#list").innerHTML=L.map((l,i)=>`<li style="--i:${i}"${l.n===hl?' class="now"':""}><span class="n">${l.n}</span><span>${l.s}</span><span class="t">${hm(l.st)}–${hm(l.en)}</span></li>`).join("");
+  $("#strip").innerHTML=L.map((l,i)=>`<b class="blk" style="--i:${i};left:${(l.st-510)/4.7}%;width:${(l.en-l.st)/4.7}%" data-a="${l.st}" data-b="${l.en}" title="${l.s}">${l.n}</b>`).join("")+'<i class="mk"></i>';
+}
+
+function tick(){
+  const now=new Date(),st=status(now),sec=now.getHours()*3600+now.getMinutes()*60+now.getSeconds();
+  $("#clock").textContent=pad(now.getHours())+":"+pad(now.getMinutes());
+  $("#date").textContent=DAY[now.getDay()]+", "+now.getDate()+" "+MON[now.getMonth()];
+  document.body.dataset.state=st.mode;
+  $("#state").textContent=st.state;$("#subject").textContent=st.subject;
+  $("#count").textContent=fmt(st.rem);$("#cl").textContent=st.cl;$("#foot").textContent=st.foot;
+  $("#bar").style.strokeDashoffset=C*(1-(st.p==null?0:st.p));
+  const key=st.mode+st.hl;
+  if(key!==lastKey){if(lastKey){const d=$("#dial");d.classList.remove("pulse");void d.offsetWidth;d.classList.add("pulse")}lastKey=key}
+  const vd=selDay||st.day,dk=vd+"|"+(vd===st.day?st.hl:"");
+  if(dk!==lastDay){lastDay=dk;renderDay(vd,vd===st.day?st.hl:null)}
+  $$("#chips button").forEach(b=>{const d=+b.dataset.d;b.classList.toggle("a",d===vd);b.classList.toggle("t",d===now.getDay())});
+  const today=now.getDay()===vd;
+  $$(".blk").forEach(b=>{const a=b.dataset.a*60,e=b.dataset.b*60;b.classList.toggle("d",today&&sec>=e);b.classList.toggle("c",today&&sec>=a&&sec<e)});
+  const p=(sec/60-510)/4.7,mk=$(".mk");
+  if(mk){mk.style.display=today&&p>=0&&p<=100?"block":"none";mk.style.left=p+"%"}
+  updLight(now);
+}
+
+/* ---------- Світло ---------- */
+const SRC="https://hoe.com.ua/page/pogodinni-vidkljuchennja",GR=["3.1","5.1"];
+const SNAP={g:{"3.1":[[240,480],[780,1080]],"5.1":[[480,780],[1020,1320]]},day:{d:7,m:10},at:"07.11.2026",src:"snap"};
+let L=LS("gpv")||SNAP;
+const setSrc=(c,t)=>{$("#ldot").className="dot "+c;$("#ltxt").textContent=t};
+const stamp=()=>L.src==="snap"?"збережений графік від "+L.at:"оновлено "+new Date(L.at).toLocaleTimeString("uk-UA",{hour:"2-digit",minute:"2-digit"});
+
+function parse(html){
+  const t=new DOMParser().parseFromString(html,"text/html").body.textContent,g={};
+  for(const m of t.matchAll(/Підчерга\s*(\d\.\d)\s*[–—-]\s*([^А-Яа-яІіЇїЄєҐґ]*)/g)){
+    if(g[m[1]])continue;
+    g[m[1]]=[...m[2].matchAll(/(\d{1,2}):(\d{2})\s*[-–—]\s*(\d{1,2}):(\d{2})/g)].map(x=>[+x[1]*60+ +x[2],+x[3]*60+ +x[4]]);
+  }
+  const d=t.match(new RegExp("Укренерго[»\"”]?\\s*(\\d{1,2})\\s+("+MON.join("|")+")","i"));
+  return{g,day:d?{d:+d[1],m:MON.indexOf(d[2].toLowerCase())}:null};
+}
+
+function buildLight(){
+  const box=$("#groups");
+  if(!Object.keys(L.g).length){box.innerHTML='<div class="gcard">На сайті зараз немає графіка погодинних відключень (або сторінка змінила формат). Перевір на сайті Хмельницькобленерго.</div>';return}
+  box.innerHTML=GR.map(id=>{const iv=L.g[id]||[];
+    return`<article class="gcard" data-g="${id}"><div class="gh"><span>Підчерга ${id}</span><span class="bdg"></span></div><p class="gm"></p><p class="gs"></p>
+<div class="tl">${iv.map(([a,b],i)=>`<i class="seg" style="left:${a/14.4}%;width:${(b-a)/14.4}%;--d:${i*.15}s"></i>`).join("")}<i class="nm"></i></div>
+<div class="lab"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
+<p class="gt">${iv.length?"Без світла: "+dur(iv.reduce((s,[a,b])=>s+b-a,0))+" · "+iv.map(([a,b])=>hm(a)+"–"+hm(b)).join(", "):"Відключень за графіком немає"}</p></article>`}).join("");
+  replay();
+}
+function replay(){const b=$("#groups");b.classList.remove("go");void b.offsetWidth;requestAnimationFrame(()=>requestAnimationFrame(()=>b.classList.add("go")))}
+
+function updLight(now){
+  const nm=now.getHours()*60+now.getMinutes()+now.getSeconds()/60;
+  $$(".gcard[data-g]").forEach(c=>{
+    const iv=L.g[c.dataset.g]||[],cu=iv.find(([a,b])=>nm>=a&&nm<b),nx=iv.find(([a])=>a>nm),bd=c.querySelector(".bdg");
+    bd.textContent=cu?"Вимкнено":"Є світло";bd.classList.toggle("x",!!cu);
+    c.querySelector(".gm").textContent=cu?"Світла немає":"Світло є";
+    c.querySelector(".gs").textContent=cu?"Увімкнуть о "+hm(cu[1])+" · ще "+dur(cu[1]-nm):nx?"Вимкнуть о "+hm(nx[0])+" · ще "+dur(nx[0]-nm):"Сьогодні відключень більше немає";
+    c.querySelector(".nm").style.left=nm/14.4+"%";
+  });
+  const w=$("#lwarn"),d=L.day;
+  w.textContent=d&&(d.d!==now.getDate()||d.m!==now.getMonth())?"Увага: це графік на "+d.d+" "+MON[d.m]+", а не на сьогодні. Перевір сайт.":"";
+}
+
+async function load(){
+  setSrc("load","Оновлюю графік…");
+  const routes=[u=>u,u=>"https://corsproxy.io/?"+encodeURIComponent(u),u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u)];
+  for(const r of routes){
+    try{
+      const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),9000);
+      const res=await fetch(r(SRC),{signal:ctl.signal});clearTimeout(to);
+      if(!res.ok)continue;
+      const html=await res.text();
+      if(!html.includes("Погодинні відключення"))continue;
+      L={...parse(html),at:Date.now(),src:"live"};LS("gpv",L);buildLight();setSrc("ok","Дані з hoe.com.ua · "+stamp());return;
+    }catch(e){}
+  }
+  setSrc("err","Не вдалося зв’язатися з hoe.com.ua · показую "+stamp());
+}
+$("#lreload").onclick=load;
+
+/* ---------- Вкладки ---------- */
+const MAP="https://map.ukrainealarm.com/",NAMES=["lessons","alerts","light"];let cur=0;
+function go(i){
+  const v=$$(".view");v[cur].classList.remove("on");
+  v[i].style.setProperty("--dx",(i>=cur?"":"-")+"28px");void v[i].offsetWidth;v[i].classList.add("on");
+  $("#pill").style.transform="translateX("+i*100+"%)";
+  $$(".tabs button").forEach((b,k)=>{b.classList.toggle("a",k===i);k===i?b.setAttribute("aria-current","page"):b.removeAttribute("aria-current")});
+  if(i===1&&!$("#map").getAttribute("src"))$("#map").src=MAP;
+  if(i===2)replay();
+  cur=i;history.replaceState(null,"","#"+NAMES[i]);scrollTo(0,0);
+}
+$$(".tabs button").forEach(b=>b.onclick=()=>go(+b.dataset.t));
+$("#mapReload").onclick=()=>{const m=$("#map");m.src="about:blank";setTimeout(()=>m.src=MAP,60)};
+
+/* ---------- Тема ---------- */
+const root=document.documentElement,sv=LS("theme");if(sv)root.dataset.theme=sv;
+$("#theme").onclick=()=>{const dark=(root.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"))==="dark",n=dark?"light":"dark";root.dataset.theme=n;LS("theme",n)};
+
+/* ---------- Старт ---------- */
+buildLight();setSrc("load","Завантаження… · "+stamp());
+tick();setInterval(tick,1000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()});
+const h0=NAMES.indexOf(location.hash.slice(1));if(h0>0)go(h0);
+load();setInterval(load,600000);
+</script>
+</body>
+</html>
