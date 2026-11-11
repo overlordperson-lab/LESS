@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14213D">
-<title>Мій день: уроки, тривоги, світло</title>
+<title>Славутський ліцей: мій день</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
@@ -21,6 +21,8 @@ body[data-state=lesson]{--accent:var(--blue)}body[data-state=break]{--accent:var
 .top{display:flex;justify-content:space-between;align-items:center;padding:18px 18px 0}
 .clock{font:700 1.7rem Unbounded,Onest,sans-serif;font-variant-numeric:tabular-nums}
 .date{color:var(--soft);font-size:.9rem}
+.tr{display:flex;gap:8px;align-items:center}
+.cb{padding:6px 12px;border-radius:99px;background:var(--ink);color:var(--bg);font:700 .85rem Unbounded,Onest,sans-serif}
 #theme{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1.2rem;cursor:pointer;transition:transform .4s}
 #theme:hover{transform:rotate(180deg)}
 main{padding:8px 18px 130px}
@@ -58,21 +60,27 @@ h2{font-size:1.05rem;margin:26px 0 8px}
 .sheet .n{position:absolute;left:-44px;width:28px;text-align:right;font-weight:600;color:var(--soft)}
 .sheet .t{margin-left:auto;color:var(--soft);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap}
 .sheet .now{background:var(--mark);font-weight:600}
-.mapbox{position:relative;height:66vh;min-height:380px;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(100deg,var(--card) 30%,var(--line) 50%,var(--card) 70%) 0 0/300% 100%;animation:sh 1.6s infinite linear}
+.mapbox{position:relative;height:62vh;min-height:380px;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(100deg,var(--card) 30%,var(--line) 50%,var(--card) 70%) 0 0/300% 100%;animation:sh 1.6s infinite linear}
 @keyframes sh{to{background-position:-300% 0}}
 .mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:16px;background:var(--card);border:1px solid var(--line);margin-bottom:12px}
+.seg2 button{padding:10px 6px;border:0;border-radius:12px;background:none;color:var(--soft);font:600 .9rem Onest,sans-serif;cursor:pointer;transition:.3s}
+.seg2 button.a{background:var(--ink);color:var(--bg)}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .btn{display:inline-block;padding:12px 16px;border-radius:14px;background:var(--ink);color:var(--bg);font:600 1rem Onest,sans-serif;text-decoration:none;border:1px solid var(--ink);cursor:pointer;transition:transform .2s}
 .btn:hover{transform:translateY(-2px)}
 .btn.g{background:var(--card);color:var(--ink);border-color:var(--line)}
+.btn.s{padding:7px 12px;font-size:.8rem;border-radius:10px}
+select,textarea{font:400 1rem Onest,sans-serif;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px}
+textarea{width:100%;min-height:70px;resize:vertical;margin-top:10px}
 .note{font-size:.85rem;color:var(--soft);margin:10px 0 0}
 .src{display:flex;gap:8px;align-items:center;font-size:.85rem;color:var(--soft)}
 .dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--off)}
 .dot.ok{background:var(--green)}.dot.err{background:var(--red)}.dot.load{animation:bl 1s infinite}
 @keyframes bl{50%{opacity:.2}}
 .warn{color:var(--red);font-weight:600}
-.gcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.gh{display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.gcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:rw .45s both}
+.gh{display:flex;justify-content:space-between;align-items:center;font-weight:600;gap:8px}
 .bdg{padding:4px 12px;border-radius:99px;font-size:.8rem;color:#fff;background:var(--green);transition:background .4s}.bdg.x{background:var(--red)}
 .gm{font:700 1.4rem Unbounded,Onest,sans-serif;margin:10px 0 2px}
 .gs{margin:0 0 14px;color:var(--soft)}
@@ -81,26 +89,91 @@ h2{font-size:1.05rem;margin:26px 0 8px}
 .go .seg{transform:scaleX(1)}
 .nm{position:absolute;top:0;bottom:0;width:3px;margin-left:-1.5px;background:var(--ink);transition:left 1s linear}
 .gt{margin:12px 0 0;font-size:.9rem;color:var(--soft)}
-.tabs{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(92vw,420px);display:grid;grid-template-columns:repeat(3,1fr);padding:6px;border-radius:24px;background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);box-shadow:0 10px 30px #0003;z-index:5}
-.pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/3);border-radius:18px;background:var(--ink);transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
-.tabs button{position:relative;z-index:1;background:none;border:0;padding:9px 0 7px;color:var(--soft);font:600 .75rem Onest,sans-serif;display:grid;justify-items:center;gap:2px;cursor:pointer;transition:color .3s}
+.add{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.dz{margin-top:16px}
+.dzh{font:700 1.05rem Unbounded,Onest,sans-serif}
+.sj{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sj span{padding:3px 10px;border-radius:99px;background:var(--line);font-size:.8rem}
+.priv{margin-top:16px;padding:14px 16px;border-radius:16px;border:1px dashed var(--green);background:color-mix(in srgb,var(--green) 12%,transparent);font-size:.9rem}
+.tabs{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(94vw,460px);display:grid;grid-template-columns:repeat(4,1fr);padding:6px;border-radius:24px;background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);box-shadow:0 10px 30px #0003;z-index:5}
+.pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/4);border-radius:18px;background:var(--ink);transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
+.tabs button{position:relative;z-index:1;background:none;border:0;padding:9px 0 7px;color:var(--soft);font:600 .72rem Onest,sans-serif;display:grid;justify-items:center;gap:2px;cursor:pointer;transition:color .3s}
 .tabs button.a{color:var(--bg)}
 .tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.sig{text-align:center;margin-top:34px;color:var(--soft);font-size:.8rem}
+#intro{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px;text-align:center;overflow:auto;transition:opacity .6s}
+#intro.out{opacity:0;pointer-events:none}
+.step{display:none;max-width:520px;width:100%}
+.step.on{display:block;animation:in .6s both}
+.fw{display:inline-block;white-space:nowrap;margin:0 .25em}
+.fl{display:inline-block;font:700 clamp(1.7rem,8vw,2.8rem) Unbounded,Onest,sans-serif;animation:fall .95s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--i)*55ms)}
+@keyframes fall{from{opacity:0;transform:translateY(-110vh) rotate(var(--r))}55%{opacity:1}}
+.fi{animation:rw .7s both;animation-delay:var(--d);margin:0 0 14px;font-size:1.05rem}
+.fi.h{font:700 1.5rem Unbounded,Onest,sans-serif}
+.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 18px}
+.cg button{padding:14px 0;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 1rem Unbounded,Onest,sans-serif;cursor:pointer;transition:.25s;animation:rw .4s both;animation-delay:calc(var(--i)*30ms)}
+.cg button:hover{transform:translateY(-3px);background:var(--ink);color:var(--bg)}
+.cg button.a{border-color:var(--blue);box-shadow:inset 0 0 0 2px var(--blue)}
+.room{margin:4px 0 0;color:var(--soft);font-weight:600}.rm{display:block;font-size:.78rem;color:var(--soft);font-weight:400}
+input{font:400 1rem Onest,sans-serif;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px;width:100%;margin-bottom:10px}
+.rb{display:grid;gap:12px;margin-top:10px}.rb .btn{padding:16px;font-size:1.05rem}.err{color:var(--red);font-weight:600;min-height:1.4em;margin:0 0 8px}
+button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body data-state="off">
 <div class="glow"></div>
+
+<div id="intro">
+  <div class="step" id="s1"><div id="ttl"></div></div>
+  <div class="step" id="s2">
+    <p class="fi h" style="--d:0s">Привіт, шановний учню! 👋</p>
+    <p class="fi" style="--d:.9s">Вітаю тебе на допоміжному сайті для учнів 10–11 класів Славутського ліцею Славутської міської ради.</p>
+    <p class="fi" style="--d:1.8s">Ти перебуваєш на сайті, розробником якого є <b>К.А.А 10-В</b>.</p>
+    <p class="fi" style="--d:2.7s">Сайт безкоштовний для кожного учня 10–11 класів.</p>
+    <button class="btn fi" id="go" style="--d:3.6s">Продовжити →</button>
+  </div>
+  <div class="step" id="s3">
+    <p class="fi h" style="--d:0s">Обери свій клас</p>
+    <p class="note" style="margin:0 0 6px">10 клас</p><div class="cg" id="c10"></div>
+    <p class="note" style="margin:0 0 6px">11 клас</p><div class="cg" id="c11"></div>
+    <button class="btn g s" id="cancel" style="display:none">Скасувати</button>
+  </div>
+  <div class="step" id="s4">
+    <p class="fi h" style="--d:0s">Як ти хочеш увійти?</p>
+    <div class="rb">
+      <button class="btn fi" id="asStu" style="--d:.4s">🎒 Увійти як учень</button>
+      <button class="btn g fi" id="asTea" style="--d:.8s">🧑‍🏫 Увійти як вчитель</button>
+    </div>
+    <p class="note fi" style="--d:1.2s">Учню реєстрація не потрібна: просто обери свій клас.</p>
+  </div>
+  <div class="step" id="s5">
+    <p class="fi h" style="--d:0s">Заявка вчителя</p>
+    <input id="tn" placeholder="Прізвище та ім’я по батькові" autocomplete="name">
+    <input id="te" type="email" placeholder="Твій Gmail" autocomplete="email">
+    <input id="ts" placeholder="Предмет">
+    <p class="err" id="terr"></p>
+    <button class="btn" id="tsend">Надіслати заявку</button>
+    <p class="note">Відкриється лист адміністратору: натисни «Надіслати» у поштовому застосунку.</p>
+    <button class="btn g s" id="tback">← Назад</button>
+  </div>
+  <div class="step" id="s6">
+    <p class="fi h" style="--d:0s">Заявку відправлено ✉️</p>
+    <p class="fi" style="--d:.6s">Зачекайте, поки адміністратор схвалить або відхилить її.</p>
+    <button class="btn fi" id="tstu" style="--d:1.2s">Тим часом увійти як учень</button>
+  </div>
+</div>
+
 <header class="top">
   <div><div class="clock" id="clock">--:--</div><div class="date" id="date"></div></div>
-  <button id="theme" aria-label="Змінити тему">◐</button>
+  <div class="tr"><span class="cb" id="cb"></span><button id="theme" aria-label="Змінити тему">◐</button></div>
 </header>
 <main>
   <section class="view on" id="v0">
     <div class="chips" id="chips"></div>
     <p class="state" id="state"></p>
     <h1 class="subject" id="subject"></h1>
+    <p class="room" id="room"></p>
     <div class="dial" id="dial">
       <svg viewBox="0 0 220 220" aria-hidden="true"><g id="ticks"></g><circle class="track" cx="110" cy="110" r="90"/><circle class="bar" id="bar" cx="110" cy="110" r="90"/></svg>
       <div class="inner"><div class="count" id="count">--:--</div><div class="cl" id="cl"></div></div>
@@ -111,28 +184,41 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-off
     <div class="lab"><span>08:30</span><span>16:20</span></div>
     <h2 id="dayTitle"></h2>
     <ol class="sheet" id="list"></ol>
+    <div class="row"><button class="btn g" id="chg">⇄ Змінити клас</button></div>
+    <p class="sig">by: К.А.А 10-В</p>
   </section>
 
   <section class="view" id="v1">
     <h2 style="margin-top:14px">Мапа тривог</h2>
+    <div class="seg2" id="mapsw"><button data-m="0">Повітряна тривога</button><button data-m="1">Neptun</button></div>
     <div class="mapbox"><iframe id="map" title="Мапа повітряних тривог" loading="lazy" referrerpolicy="no-referrer"></iframe></div>
     <div class="row">
       <button class="btn" id="mapReload">Оновити мапу</button>
-      <a class="btn g" href="https://map.ukrainealarm.com/" target="_blank" rel="noopener">Відкрити окремо</a>
-      <a class="btn g" href="https://alerts.in.ua" target="_blank" rel="noopener">alerts.in.ua</a>
+      <a class="btn g" id="mapOpen" href="#" target="_blank" rel="noopener">Відкрити окремо</a>
     </div>
-    <p class="note">Офіційна мапа «Повітряна тривога». Якщо вона не показується всередині сторінки, відкрий її кнопкою «Відкрити окремо».</p>
+    <p class="note">Якщо мапа не показується всередині сторінки (сайт може забороняти вбудовування), відкрий її кнопкою «Відкрити окремо».</p>
   </section>
 
   <section class="view" id="v2">
-    <h2 style="margin-top:14px">Світло: підчерги 3.1 та 5.1</h2>
+    <h2 style="margin-top:14px">Графік відключень світла</h2>
     <div class="src"><span class="dot load" id="ldot"></span><span id="ltxt">Завантаження…</span></div>
     <p class="note warn" id="lwarn"></p>
     <div id="groups"></div>
+    <div class="add"><select id="gsel" aria-label="Підчерга"></select><button class="btn" id="gadd">+ Додати підчергу</button></div>
     <div class="row">
-      <button class="btn" id="lreload">Оновити графік</button>
+      <button class="btn g" id="lreload">Оновити графік</button>
       <a class="btn g" href="https://hoe.com.ua/page/pogodinni-vidkljuchennja" target="_blank" rel="noopener">Сайт Хмельницькобленерго</a>
     </div>
+  </section>
+
+  <section class="view" id="v3">
+    <h2 style="margin-top:14px">Домашні завдання</h2>
+    <p class="note" id="hwInfo" style="margin-top:0"></p>
+    <div class="row"><button class="btn" id="nzTog">Відкрити «Нові знання» тут</button><a class="btn g" href="https://nz.ua" target="_blank" rel="noopener">У новій вкладці ↗</a></div>
+    <div class="mapbox" id="nzbox" style="display:none;margin-top:12px"><iframe id="nz" title="Нові знання" referrerpolicy="no-referrer"></iframe></div>
+    <p class="note" id="nzNote" style="display:none">Якщо сторінка порожня, nz.ua забороняє вбудовування: скористайся кнопкою «У новій вкладці».</p>
+    <div class="priv">🔒 <b>Ми не збираємо інформацію про ваші логіни та паролі.</b> Вхід у «Нові знання» відбувається лише на їхньому сайті. Нотатки нижче зберігаються тільки на цьому пристрої.</div>
+    <div id="hw"></div>
   </section>
 </main>
 
@@ -141,39 +227,54 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-off
   <button class="a" data-t="0" aria-current="page"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0-6 6v3.5L4 16h16l-2-3.5V9a6 6 0 0 0-6-6zM10 19a2 2 0 0 0 4 0"/></svg>Уроки</button>
   <button data-t="1"><svg viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3zM12 10v5M12 18v.01"/></svg>Тривоги</button>
   <button data-t="2"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>Світло</button>
+  <button data-t="3"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM8 8h7M8 12h5"/></svg>Д/З</button>
 </nav>
 
 <script>
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s),pad=n=>String(n).padStart(2,"0"),hm=m=>pad(m/60|0)+":"+pad(m%60);
 const LS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
-// Дзвінки: [год, хв початку, год, хв кінця]
-const B=[[8,30,9,15],[9,25,10,10],[10,20,11,5],[11,15,12,0],[12,55,13,40],[13,45,14,30],[14,40,15,25],[15,35,16,20]];
-// Розклад (1=пн…5=пт). 8 елементів = уроки №1…№8, null = уроку немає. Назви можна міняти.
+// Дзвінки. Група I: 10-А,Б,В,Д, 11-А,Б,Є (ланч після 4 уроку). Група II: 10-Г,Е, 11-В,Г,Д,Е (ланч після 5 уроку)
+const B1=[[8,30,9,15],[9,25,10,10],[10,20,11,5],[11,15,12,0],[12,55,13,40],[13,45,14,30],[14,40,15,25],[15,35,16,20]];
+const B2=[[8,30,9,15],[9,25,10,10],[10,20,11,5],[11,15,12,0],[12,5,12,50],[13,45,14,30],[14,40,15,25],[15,35,16,20]];
+const G2=["10-Г","10-Е","11-В","11-Г","11-Д","11-Е"];
+const CL={10:["А","Б","В","Г","Д","Е"],11:["А","Б","В","Г","Д","Е","Є"]};
+// Розклади класів: 1=пн…5=пт, null = уроку немає. Щоб додати клас, скопіюй блок "10-В" і заміни назви.
 const W={
-1:["Інформатика","Інформатика","Штучний інтелект / Теорія чисел","Іст/го","Теорія чисел / Електрон.","Алгебра","Природн.","STEM-проєкт"],
-2:["Інформатика","Соц. здоров’я","Природн.","Укр. мова","Англійська","Захист України","Захист України","Мова прост."],
-3:["Іст/го","Технології","Геометрія","Геометрія","Англійська","Укр. література","Фізкультура",null],
-4:["Іст/го","Природн.","Фізкультура","Укр. мова","Мистецтво","Права-обов.","Укр. література",null],
-5:["Електрон. / Штучний інтелект","Англійська","Алгебра","Алгебра","Природн.","Фізкультура",null,null]};
+"10-А":{1:["Природн.|1.40", "Математика|2.3", "Укр. література|3.3/3.5", "Фізкультура|1.55", "Іст/го|3.17", "Англійська|1.39/2.2", "Есе|3.5", "Іноз. світ|2.12"],2:["Укр. мова|", "Укр. мова|", "Природн.|1.40", "Англійська|2.2/1.39", "Соц. здоров’я|1.40", "Іст/го|2.12", "Психологія|2.12", "Права-обов.|2.12"],3:["Технології|2.12", "Природн.|1.40", "Математика|2.3", "Укр. література|3.3/3.5", "Мистецтво|2.12", "Захист України|ЗУ1/ЗУ2", "Захист України|ЗУ1/ЗУ2"],4:["Іст/го|3.18", "Інформатика|3.9/3.10", "Англійська|2.2/1.39", "Математика|2.3", "Есе|3.5", "Природн.|1.40"],5:["Математика|2.3", "Іст/го|1.39", "Укр. мова|3.5/1.39", "Зар. література|2.20", "Фізкультура|1.55", "Англійська|1.39/2.2", "Фізкультура|1.56"]},
+"10-Б":{1:["Алгебра|3.6", "Англійська|3.2/2.10", "Технології|2.10", "Природн.|2.19", "Геометрія|2.3", "Іст/го|2.10", "Зар. література|2.10", "Мова прост.|2.10"],2:["Природн.|2.19", "Англійська|3.2/2.10", "Алгебра|3.6", "Соц. здоров’я|1.40", "Тур. географія|2.10", "Фізкультура|1.55", "Мистецтво|2.10", "Іноз. світ|"],3:["Захист України|ЗУ1/ЗУ2", "Захист України|ЗУ1/ЗУ2", "Зар. література|2.10", "Природн.|2.19", "Тур. географія|2.10", "Англійська|3.2/2.10", "Іноз. світ|"],4:["Англійська|3.2/2.10", "Іст/го|2.10", "Укр. мова|", "Укр. мова|", "Фізкультура|1.55", "Географія ресурсів|2.10", "Бізнес|2.10", "Права-обов.|2.10"],5:["Англійська|3.2/2.10", "Фізкультура|1.55", "Природн.|2.19", "Інформатика|3.9/3.10", "Іст/го|3.17", "Геометрія|2.3"]},
+"10-В":{1:["Інформатика|", "Інформатика|", "Штучний інтелект / Теорія чисел|", "Іст/го|3.17", "Теорія чисел / Електрон.|", "Алгебра|3.6/2.39", "Природн.|2.20", "STEM-проєкт|2.20"],2:["Інформатика|3.9/3.10", "Соц. здоров’я|1.40", "Природн.|2.20", "Укр. мова|3.3/3.18", "Англійська|2.2/3.2", "Захист України|ЗУ1/ЗУ2", "Захист України|ЗУ1/ЗУ2", "Мова прост.|2.20"],3:["Іст/го|3.17", "Технології|2.20", "Геометрія|", "Геометрія|", "Англійська|2.2/3.2", "Укр. література|1.39", "Фізкультура|1.55"],4:["Іст/го|3.17", "Природн.|2.20", "Фізкультура|1.55", "Укр. мова|3.3/2.39", "Мистецтво|2.7", "Права-обов.|3.17", "Укр. література|3.3"],5:["Електрон. / Штучний інтелект|", "Англійська|2.2/2.12", "Алгебра|", "Алгебра|", "Природн.|2.20", "Фізкультура|1.55"]},
+"10-Г":{1:["Математика|1.39", "Укр. література|3.3", "Природн.|2.20", "Англійська|3.2/1.39", "Укр. мова|3.3/2.10", "Іст/го|3.18", "Мова прост.|1.39", "Психологія|1.39"],2:["Математика|1.39", "Природн.|2.20", "Англійська|3.2/1.39", "Мистецтво|2.20", "Інформатика|3.9/3.10", "Природн.|2.20", "Хімія і здоров’я|1.40"],3:["Фізкультура|1.55", "Іст/го|3.18", "Іст/го|3.18", "Генетика|2.7", "Математика|2.3", "Природн.|2.20"],4:["Природн.|2.20", "Англійська|3.2/1.39", "Укр. мова|3.3/2.12", "Природн.|2.20", "Математика|1.39", "Фізкультура|1.55", "Хімія і здоров’я|1.40", "Технології|1.39"],5:["Природн.|2.20", "Магія|1.40", "Укр. література|3.17", "Соц. здоров’я|1.40", "Захист України|ЗУ2/ЗУ1", "Захист України|ЗУ2/ЗУ1", "Фізкультура|1.55"]},
+"10-Д":{1:["Англійська|2.2/3.2", "Природн.|2.7", "Фізкультура|1.55", "Захист України|ЗУ2/ЗУ1", "Захист України|ЗУ2/ЗУ1", "Інформатика|3.9/3.10", "Іст/го|3.17", "Кар’єрна орієнт.|3.17"],2:["Зар. література|3.18", "Алгебра|2.3/3.6", "Англійська|2.2/2.12", "Природн.|2.7", "Фізкультура|1.55", "Технології|3.6", "Іст/го|3.6"],3:["Геометрія|", "Геометрія|", "Природн.|2.7", "Мистецтво|2.3", "Укр. мова|", "Укр. мова|", "Смарт-математика|"],4:["Природн.|2.7", "Природн.|2.7", "Іст/го|3.17", "Фізкультура|1.55", "Зар. література|3.3", "Мова прост.|3.3", "Механіка|2.20", "Механіка|2.20"],5:["Алгебра|", "Алгебра|", "Соц. здоров’я|1.40", "Англійська|2.12/3.2", "Природн.|2.7", "Іст/го|3.3", "Смарт-математика|"]},
+"10-Е":{1:["Укр. література|3.17", "Історія України|", "Історія України|", "Природн.|2.20", "Інформатика|3.9/3.10", "Соц. здоров’я|1.40", "Фізкультура|1.55", "Право|"],2:["Захист України|ЗУ2/ЗУ1", "Захист України|ЗУ2/ЗУ1", "Укр. мова|3.3/3.5", "Математика|3.17", "Всесвітня історія|3.18", "Англійська|2.2/1.39", "Фізкультура|1.55", "Штучний інтелект|3.9"],3:["Політологія|3.18", "Англійська|2.12/2.2", "Укр. література|3.3", "Природн.|2.20", "Природн.|2.20", "Соціологія|3.17", "Право|"],4:["Укр. мова|3.3/2.12", "Технології|3.17", "Природн.|2.20", "Громадянська освіта|3.17/3.18", "Громадянська освіта|3.17/3.18", "Математика|2.3", "Кар’єрна орієнт.|3.17", "Право|"],5:["Англійська|2.2/2.12", "Мистецтво|2.7", "Фізкультура|1.55", "Історія України|3.18/3.17", "Всесвітня історія|3.18", "Математика|3.17", "Право|"]},
+"11-А":{1:["Біологія|2.7", "Математика|3.6", "Хімія|1.40", "Укр. мова|3.5/3.3", "Англійська|1.39/2.2", "Астрономія|2.20", "Фізкультура|1.56", "Мистецтво|3.5"],2:["Фізкультура|1.55", "Англійська|2.2/1.39", "Історія|3.17", "Фізика|2.19", "Математика|3.6", "Укр. література|3.5", "Історія|"],3:["Укр. мова|3.5/3.3", "Біологія|2.7", "Хімія|1.40", "Англійська|1.39/2.2", "Історія|3.17", "Фізкультура|1.55", "Мистецтво|3.5", "Географія|3.5"],4:["Математика|3.6", "Укр. мова|3.5/3.3", "Фізика|2.19", "Інформатика|3.9/3.10", "Захист України|ЗУ2/ЗУ1", "Захист України|ЗУ2/ЗУ1"],5:["Зар. література|3.18", "Укр. література|3.5", "Англійська|2.39/2.2", "Укр. мова|3.5/2.39", "Математика|3.6", "Фізика|2.19"]},
+"11-Б":{1:["Математика|2.3", "Укр. мова|3.5", "Англійська|3.2/2.12", "Історія|3.18", "Фізкультура|1.55", "Мистецтво|3.3", "Зар. література|3.6"],2:["Хімія|1.40", "Математика|3.18", "Географія|3.18", "Укр. мова|3.5", "Фізика|2.19", "Англійська|2.10/3.2"],3:["Інформатика|3.9/3.10", "Укр. мова|3.5", "Фізика|2.19", "Англійська|3.18/3.2", "Фізкультура|1.55", "Математика|2.3", "Біологія|2.7", "Астрономія|2.20"],4:["Фізкультура|1.55", "Математика|2.3", "Англійська|2.39/3.2", "Хімія|1.40", "Історія|3.18", "Історія|3.18", "Захист України|ЗУ2/ЗУ1", "Захист України|ЗУ2/ЗУ1"],5:["Укр. мова|3.5", "Англійська|3.18/3.2", "Мистецтво|3.18", "Фізика|2.19", "Історія|3.18", "Біологія|2.7"]},
+"11-В":{1:["Історія|3.5", "Укр. мова|2.19", "Англійська|2.2/1.39", "Математика|", "Математика|", "Фізика|2.19", "Інформатика|3.9/3.10", "Фін. грамотність|2.3"],2:["Математика|3.6", "Інформатика|", "Інформатика|", "Захист України|ЗУ1/ЗУ2", "Захист України|ЗУ1/ЗУ2", "Біологія|2.7", "Фін. грамотність|2.3", "Фізкультура|1.55"],3:["Хімія|1.40", "Фізика|2.19", "Інформатика|", "Інформатика|", "Укр. мова|3.3", "Англійська|2.2/2.12", "Зар. література|3.3", "Історія|"],4:["Хімія|1.40", "Фізика|2.19", "Математика|", "Математика|", "Укр. мова|3.3", "Історія|2.7", "Фізкультура|1.55"],5:["Фізкультура|1.55", "Укр. мова|3.3", "Географія|3.3", "Біологія|2.7", "Англійська|2.2/1.39", "Астрономія|2.20"]},
+"11-Г":{1:["Укр. мова|3.3", "Англійська|2.2/2.12", "Математика|3.6", "Біологія|2.7", "Фізкультура|1.55", "Історія|3.17", "Фін. грамотність|2.7"],2:["Астрономія|2.20", "Укр. мова|3.3", "Біологія|2.7", "Фізкультура|1.55", "Англійська|2.2/1.39", "Фізика|2.19", "Зар. література|3.3", "Історія|"],3:["Біологія|2.7", "Укр. мова|3.3", "Захист України|ЗУ1/ЗУ2", "Захист України|ЗУ1/ЗУ2", "Математика|3.6", "Фін. грамотність|3.3", "Історія|3.17", "Географія|3.3"],4:["Фізика|2.19", "Математика|3.6", "Біологія|2.7", "Англійська|2.12/2.2", "Хімія|1.40", "Укр. мова|3.5", "Інформатика|3.9/3.10"],5:["Хімія|1.40", "Фізика|2.19", "Біологія|2.7", "Англійська|2.2/1.39", "Фізкультура|1.55", "Математика|3.6"]},
+"11-Д":{1:["Фізкультура|1.55", "Хімія|1.40", "Фізика|2.19", "Математика|", "Математика|", "Захист України|ЗУ1/ЗУ2", "Захист України|ЗУ1/ЗУ2"],2:["Англійська|2.2/3.2", "Фізкультура|1.55", "Фізика|2.19", "Фін. грамотність|2.3", "Укр. мова|3.5", "Хімія|1.40", "Астрономія|2.20", "Історія|"],3:["Математика|", "Математика|", "Укр. мова|3.5", "Історія|3.17", "Біологія|2.7", "Фізика|2.19", "Фін. грамотність|2.3"],4:["Укр. мова|3.5", "Історія|3.18", "Математика|2.3", "Англійська|3.2/1.39", "Фізкультура|1.55", "Інформатика|3.9/3.10", "Біологія|2.7"],5:["Фізика|2.19", "Математика|", "Математика|", "Географія|3.3", "Англійська|2.12/3.2", "Укр. мова|3.5", "Зар. література|2.3"]},
+"11-Е":{1:["Історія|3.18", "Фізкультура|1.55", "Укр. мова|2.7", "Зар. література|2.12", "Біологія|2.7", "Математика|2.3", "Історія|3.18", "Інформатика|3.9/3.10"],2:["Математика|2.3", "Біологія|2.7", "Фізкультура|1.55", "Англійська|3.2/2.10", "Укр. мова|3.3", "Право|3.18", "Право|3.18"],3:["Фізика|2.19", "Укр. мова|3.17", "Хімія|1.39", "Хімія|1.40", "Історія|3.18", "Мистецтво|2.7", "Географія|2.19"],4:["Мистецтво|2.3", "Фізкультура|1.55", "Історія|3.18", "Фізика|2.19", "Англійська|2.2/3.2", "Математика|3.6"],5:["Укр. мова|3.3", "Астрономія|2.20", "Англійська|3.2/2.12", "Математика|2.3", "Фізика|2.19", "Право|3.18", "Захист України|ЗУ2/ЗУ1", "Захист України|ЗУ1/ЗУ2"]},
+"11-Є":{1:["Захист України|ЗУ2/ЗУ1", "Захист України|ЗУ2/ЗУ1", "Географія|2.39", "Математика|2.39", "Укр. мова|3.3", "Фізкультура|1.55", "Історія|2.39"],2:["Англійська|2.39", "Фізика|2.19", "Мистецтво|2.39", "Математика|2.39", "Укр. мова|2.39", "Зар. література|2.39", "Історія|"],3:["Хімія|1.39", "Хімія|1.39", "Фізкультура|1.55", "Укр. мова|2.12", "Фізика|2.19", "Історія|2.39", "Астрономія|2.20"],4:["Англійська|2.39", "Захист України|ЗУ2/ЗУ1", "Захист України|ЗУ2/ЗУ1", "Біологія|2.7", "Математика|2.39", "Фізика|2.19", "Мистецтво|2.39", "Інформатика|3.9/3.10"],5:["Біологія|2.7", "Математика|2.39", "Захист України|ЗУ2/ЗУ1", "Фізкультура|1.55", "Англійська|2.39", "Укр. мова|2.39"]}};
 const DAY=["Неділя","Понеділок","Вівторок","Середа","Четвер","П’ятниця","Субота"],SH=["Нд","Пн","Вт","Ср","Чт","Пт","Сб"];
 const WHEN=["","у понеділок","у вівторок","у середу","у четвер","у п’ятницю"];
 const MON=["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
-const lessonsOf=d=>(W[d]||[]).map((s,i)=>s?{n:i+1,s,st:B[i][0]*60+B[i][1],en:B[i][2]*60+B[i][3]}:null).filter(Boolean);
+const cls=()=>LS("cls"),sch=()=>W[cls()]||null,bells=()=>G2.includes(cls())?B2:B1;
+const lessonsOf=d=>{const s=sch(),B=bells();return((s&&s[d])||[]).map((n,i)=>n?{n:i+1,s:n.split("|")[0],r:n.split("|")[1]||"",st:B[i][0]*60+B[i][1],en:B[i][2]*60+B[i][3]}:null).filter(Boolean)};
+const rt=l=>l.r?"Каб. "+l.r.split("/").join(" / ")+(l.r.includes("/")?" (за групами)":""):"Кабінет не визначено";
 const dur=m=>{m=Math.max(1,Math.round(m));const h=m/60|0,r=m%60;return h?h+" год"+(r?" "+r+" хв":""):r+" хв"};
 function fmt(s){s=Math.max(0,Math.floor(s));const h=s/3600|0,m=s%3600/60|0;return(h?h+":"+pad(m):pad(m))+":"+pad(s%60)}
 
 function status(now){
   const d=now.getDay(),sec=now.getHours()*3600+now.getMinutes()*60+now.getSeconds(),L=lessonsOf(d);
+  if(!sch())return{mode:"off",state:"Розклад ще не додано",subject:"Для "+cls()+" розклад уроків скоро з’явиться",cl:"",rem:0,p:null,foot:"Дзвінки вже налаштовані під твою групу",hl:null,day:d>=1&&d<=5?d:1};
   if(L.length){
     const f=L[0],la=L[L.length-1];
-    if(sec<f.st*60)return{mode:"off",state:"Уроки ще не почалися",subject:"Урок "+f.n+": "+f.s,cl:"до початку першого уроку",rem:f.st*60-sec,p:null,foot:"Початок о "+hm(f.st),hl:f.n,day:d};
+    if(sec<f.st*60)return{mode:"off",state:"Уроки ще не почалися",subject:"Урок "+f.n+": "+f.s,cl:"до початку першого уроку",rem:f.st*60-sec,p:null,foot:"Початок о "+hm(f.st),room:rt(f),hl:f.n,day:d};
     if(sec<la.en*60)for(let i=0;i<L.length;i++){
       const l=L[i],nx=L[i+1];
-      if(sec>=l.st*60&&sec<l.en*60)return{mode:"lesson",state:"Урок "+l.n,subject:l.s,cl:"до кінця уроку",rem:l.en*60-sec,p:(sec-l.st*60)/((l.en-l.st)*60),foot:nx?"Далі: "+nx.s+" о "+hm(nx.st):"Це останній урок на сьогодні",hl:l.n,day:d};
-      if(nx&&sec>=l.en*60&&sec<nx.st*60)return{mode:"break",state:l.n===4&&nx.n===5?"Ланч-перерва":"Перерва",subject:"Далі: урок "+nx.n+" — "+nx.s,cl:"до початку уроку",rem:nx.st*60-sec,p:(sec-l.en*60)/((nx.st-l.en)*60),foot:"Урок почнеться о "+hm(nx.st),hl:nx.n,day:d};
+      if(sec>=l.st*60&&sec<l.en*60)return{mode:"lesson",state:"Урок "+l.n,subject:l.s,cl:"до кінця уроку",rem:l.en*60-sec,p:(sec-l.st*60)/((l.en-l.st)*60),foot:nx?"Далі: "+nx.s+" о "+hm(nx.st)+" · "+rt(nx):"Це останній урок на сьогодні",room:rt(l),hl:l.n,day:d};
+      if(nx&&sec>=l.en*60&&sec<nx.st*60)return{mode:"break",state:nx.st-l.en>20?"Ланч-перерва":"Перерва",subject:"Далі: урок "+nx.n+" — "+nx.s,cl:"до початку уроку",rem:nx.st*60-sec,p:(sec-l.en*60)/((nx.st-l.en)*60),foot:"Урок почнеться о "+hm(nx.st),room:rt(nx),hl:nx.n,day:d};
     }
   }
-  let o=1;while(!W[(d+o)%7])o++;
+  let o=1;while(!(sch()[(d+o)%7])&&o<8)o++;
   const nd=(d+o)%7,f=lessonsOf(nd)[0];
   return{mode:"off",state:L.length?"Уроки на сьогодні закінчилися":"Вихідний",subject:"Наступний урок "+(o===1?"завтра":WHEN[nd])+" о "+hm(f.st)+": "+f.s,cl:"до початку уроків",rem:o*86400-sec+f.st*60,p:null,foot:"",hl:null,day:nd};
 }
@@ -187,21 +288,22 @@ $("#chips").onclick=e=>{const b=e.target.closest("button");if(b){selDay=+b.datas
 function renderDay(d,hl){
   $("#dayTitle").textContent="Розклад: "+DAY[d];
   const L=lessonsOf(d);
-  $("#list").innerHTML=L.map((l,i)=>`<li style="--i:${i}"${l.n===hl?' class="now"':""}><span class="n">${l.n}</span><span>${l.s}</span><span class="t">${hm(l.st)}–${hm(l.en)}</span></li>`).join("");
+  $("#list").innerHTML=L.length?L.map((l,i)=>`<li style="--i:${i}"${l.n===hl?' class="now"':""}><span class="n">${l.n}</span><span>${l.s}<small class="rm">${rt(l)}</small></span><span class="t">${hm(l.st)}–${hm(l.en)}</span></li>`).join(""):`<li style="--i:0"><span>${sch()?"Уроків немає":"Розклад цього класу ще не додано"}</span></li>`;
   $("#strip").innerHTML=L.map((l,i)=>`<b class="blk" style="--i:${i};left:${(l.st-510)/4.7}%;width:${(l.en-l.st)/4.7}%" data-a="${l.st}" data-b="${l.en}" title="${l.s}">${l.n}</b>`).join("")+'<i class="mk"></i>';
 }
 
 function tick(){
+  if(!cls())return;
   const now=new Date(),st=status(now),sec=now.getHours()*3600+now.getMinutes()*60+now.getSeconds();
   $("#clock").textContent=pad(now.getHours())+":"+pad(now.getMinutes());
   $("#date").textContent=DAY[now.getDay()]+", "+now.getDate()+" "+MON[now.getMonth()];
   document.body.dataset.state=st.mode;
-  $("#state").textContent=st.state;$("#subject").textContent=st.subject;
-  $("#count").textContent=fmt(st.rem);$("#cl").textContent=st.cl;$("#foot").textContent=st.foot;
+  $("#state").textContent=st.state;$("#subject").textContent=st.subject;$("#room").textContent=st.room||"";
+  $("#count").textContent=sch()?fmt(st.rem):"--:--";$("#cl").textContent=st.cl;$("#foot").textContent=st.foot;
   $("#bar").style.strokeDashoffset=C*(1-(st.p==null?0:st.p));
   const key=st.mode+st.hl;
   if(key!==lastKey){if(lastKey){const d=$("#dial");d.classList.remove("pulse");void d.offsetWidth;d.classList.add("pulse")}lastKey=key}
-  const vd=selDay||st.day,dk=vd+"|"+(vd===st.day?st.hl:"");
+  const vd=selDay||st.day,dk=cls()+vd+"|"+(vd===st.day?st.hl:"");
   if(dk!==lastDay){lastDay=dk;renderDay(vd,vd===st.day?st.hl:null)}
   $$("#chips button").forEach(b=>{const d=+b.dataset.d;b.classList.toggle("a",d===vd);b.classList.toggle("t",d===now.getDay())});
   const today=now.getDay()===vd;
@@ -212,38 +314,41 @@ function tick(){
 }
 
 /* ---------- Світло ---------- */
-const SRC="https://hoe.com.ua/page/pogodinni-vidkljuchennja",GR=["3.1","5.1"];
+const SRC="https://hoe.com.ua/page/pogodinni-vidkljuchennja",ALL=[1,2,3,4,5,6].flatMap(a=>[1,2].map(b=>a+"."+b));
 const SNAP={g:{"3.1":[[240,480],[780,1080]],"5.1":[[480,780],[1020,1320]]},day:{d:7,m:10},at:"07.11.2026",src:"snap"};
-let L=LS("gpv")||SNAP;
+let L=LS("gpv")||SNAP,GR=LS("grp")||[];
 const setSrc=(c,t)=>{$("#ldot").className="dot "+c;$("#ltxt").textContent=t};
 const stamp=()=>L.src==="snap"?"збережений графік від "+L.at:"оновлено "+new Date(L.at).toLocaleTimeString("uk-UA",{hour:"2-digit",minute:"2-digit"});
 
 function parse(html){
   const t=new DOMParser().parseFromString(html,"text/html").body.textContent,g={};
-  for(const m of t.matchAll(/Підчерга\s*(\d\.\d)\s*[–—-]\s*([^А-Яа-яІіЇїЄєҐґ]*)/g)){
+  for(const m of t.matchAll(/Підчерга\s*(\d\.\d)\s*[–—:-]+\s*([^А-Яа-яІіЇїЄєҐґ]*)/g)){
     if(g[m[1]])continue;
     g[m[1]]=[...m[2].matchAll(/(\d{1,2}):(\d{2})\s*[-–—]\s*(\d{1,2}):(\d{2})/g)].map(x=>[+x[1]*60+ +x[2],+x[3]*60+ +x[4]]);
   }
   const d=t.match(new RegExp("Укренерго[»\"”]?\\s*(\\d{1,2})\\s+("+MON.join("|")+")","i"));
   return{g,day:d?{d:+d[1],m:MON.indexOf(d[2].toLowerCase())}:null};
 }
-
 function buildLight(){
-  const box=$("#groups");
-  if(!Object.keys(L.g).length){box.innerHTML='<div class="gcard">На сайті зараз немає графіка погодинних відключень (або сторінка змінила формат). Перевір на сайті Хмельницькобленерго.</div>';return}
-  box.innerHTML=GR.map(id=>{const iv=L.g[id]||[];
-    return`<article class="gcard" data-g="${id}"><div class="gh"><span>Підчерга ${id}</span><span class="bdg"></span></div><p class="gm"></p><p class="gs"></p>
-<div class="tl">${iv.map(([a,b],i)=>`<i class="seg" style="left:${a/14.4}%;width:${(b-a)/14.4}%;--d:${i*.15}s"></i>`).join("")}<i class="nm"></i></div>
+  const box=$("#groups"),sel=$("#gsel"),free=ALL.filter(x=>!GR.includes(x));
+  sel.innerHTML=free.map(x=>`<option>${x}</option>`).join("");sel.style.display=$("#gadd").style.display=free.length?"":"none";
+  if(!GR.length){box.innerHTML='<div class="gcard">Ще не додано жодної підчерги. Обери свою зі списку нижче та натисни «Додати».</div>';return}
+  box.innerHTML=GR.map(id=>{const iv=L.g[id];
+    return`<article class="gcard" data-g="${id}"><div class="gh"><span>Підчерга ${id}</span><span style="display:flex;gap:8px;align-items:center"><span class="bdg"></span><button class="btn g s" data-r="${id}" aria-label="Видалити підчергу ${id}">✕</button></span></div><p class="gm"></p><p class="gs"></p>
+<div class="tl">${(iv||[]).map(([a,b],i)=>`<i class="seg" style="left:${a/14.4}%;width:${(b-a)/14.4}%;--d:${i*.15}s"></i>`).join("")}<i class="nm"></i></div>
 <div class="lab"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
-<p class="gt">${iv.length?"Без світла: "+dur(iv.reduce((s,[a,b])=>s+b-a,0))+" · "+iv.map(([a,b])=>hm(a)+"–"+hm(b)).join(", "):"Відключень за графіком немає"}</p></article>`}).join("");
-  replay();
+<p class="gt">${iv?(iv.length?"Без світла: "+dur(iv.reduce((s,[a,b])=>s+b-a,0))+" · "+iv.map(([a,b])=>hm(a)+"–"+hm(b)).join(", "):"Відключень за графіком немає"):"Немає даних для цієї підчерги. Натисни «Оновити графік»."}</p></article>`}).join("");
+  replay();updLight(new Date());
 }
 function replay(){const b=$("#groups");b.classList.remove("go");void b.offsetWidth;requestAnimationFrame(()=>requestAnimationFrame(()=>b.classList.add("go")))}
+$("#gadd").onclick=()=>{const v=$("#gsel").value;if(v&&!GR.includes(v)){GR.push(v);LS("grp",GR);buildLight()}};
+$("#groups").onclick=e=>{const b=e.target.closest("[data-r]");if(b){GR=GR.filter(x=>x!==b.dataset.r);LS("grp",GR);buildLight()}};
 
 function updLight(now){
   const nm=now.getHours()*60+now.getMinutes()+now.getSeconds()/60;
   $$(".gcard[data-g]").forEach(c=>{
-    const iv=L.g[c.dataset.g]||[],cu=iv.find(([a,b])=>nm>=a&&nm<b),nx=iv.find(([a])=>a>nm),bd=c.querySelector(".bdg");
+    const iv=L.g[c.dataset.g];if(!iv){c.querySelector(".bdg").style.display="none";c.querySelector(".gm").textContent="—";c.querySelector(".nm").style.display="none";return}
+    const cu=iv.find(([a,b])=>nm>=a&&nm<b),nx=iv.find(([a])=>a>nm),bd=c.querySelector(".bdg");
     bd.textContent=cu?"Вимкнено":"Є світло";bd.classList.toggle("x",!!cu);
     c.querySelector(".gm").textContent=cu?"Світла немає":"Світло є";
     c.querySelector(".gs").textContent=cu?"Увімкнуть о "+hm(cu[1])+" · ще "+dur(cu[1]-nm):nx?"Вимкнуть о "+hm(nx[0])+" · ще "+dur(nx[0]-nm):"Сьогодні відключень більше немає";
@@ -252,45 +357,109 @@ function updLight(now){
   const w=$("#lwarn"),d=L.day;
   w.textContent=d&&(d.d!==now.getDate()||d.m!==now.getMonth())?"Увага: це графік на "+d.d+" "+MON[d.m]+", а не на сьогодні. Перевір сайт.":"";
 }
-
+// Сайт обленерго не віддає дані напряму (CORS), тому паралельно пробуємо кілька проксі, береться перша успішна відповідь.
+async function tryUrl(u){
+  const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),12000);
+  try{
+    const r=await fetch(u,{signal:ctl.signal});if(!r.ok)throw 0;
+    let t=await r.text();
+    if(t.trim()[0]==="{")try{t=JSON.parse(t).contents||t}catch(e){}
+    const p=parse(t);if(!Object.keys(p.g).length)throw 0;return p;
+  }finally{clearTimeout(to)}
+}
 async function load(){
   setSrc("load","Оновлюю графік…");
-  const routes=[u=>u,u=>"https://corsproxy.io/?"+encodeURIComponent(u),u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u)];
-  for(const r of routes){
-    try{
-      const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),9000);
-      const res=await fetch(r(SRC),{signal:ctl.signal});clearTimeout(to);
-      if(!res.ok)continue;
-      const html=await res.text();
-      if(!html.includes("Погодинні відключення"))continue;
-      L={...parse(html),at:Date.now(),src:"live"};LS("gpv",L);buildLight();setSrc("ok","Дані з hoe.com.ua · "+stamp());return;
-    }catch(e){}
-  }
-  setSrc("err","Не вдалося зв’язатися з hoe.com.ua · показую "+stamp());
+  const e=encodeURIComponent(SRC),n="&_="+Date.now();
+  const urls=[SRC,"https://corsproxy.io/?"+e,"https://api.allorigins.win/raw?url="+e+n,"https://api.allorigins.win/get?url="+e+n,"https://api.codetabs.com/v1/proxy?quest="+e];
+  try{
+    const p=await Promise.any(urls.map(tryUrl));
+    L={...p,at:Date.now(),src:"live"};LS("gpv",L);buildLight();setSrc("ok","Дані з hoe.com.ua · "+stamp());
+  }catch(x){setSrc("err","Не вдалося зв’язатися з hoe.com.ua · показую "+stamp())}
 }
 $("#lreload").onclick=load;
 
+/* ---------- Мапа ---------- */
+const MAPS=["https://map.ukrainealarm.com/","https://neptun.in.ua/"];let mi=LS("map")||0;
+function setMap(i,reload){
+  mi=i;LS("map",i);$$("#mapsw button").forEach(b=>b.classList.toggle("a",+b.dataset.m===i));
+  $("#mapOpen").href=MAPS[i];
+  if(cur===1||reload){const m=$("#map");m.src="about:blank";setTimeout(()=>m.src=MAPS[i],60)}
+}
+$("#mapsw").onclick=e=>{const b=e.target.closest("button");if(b)setMap(+b.dataset.m,true)};
+$("#mapReload").onclick=()=>setMap(mi,true);
+
+/* ---------- Д/З ---------- */
+function buildHw(){
+  const now=new Date(),dow=now.getDay(),wk=dow===0||dow===6,from=wk?1:dow,box=$("#hw");
+  $("#hwInfo").textContent=wk?"Вихідні: показано наступний тиждень (пн–пт).":"Показано дні від сьогодні до п’ятниці (минулі дні приховано).";
+  let h="";
+  for(let d=from;d<=5;d++){
+    const dt=new Date(now);dt.setDate(now.getDate()+(dow===6?d+1:d-dow));
+    const k="hw|"+cls()+"|"+dt.getFullYear()+pad(dt.getMonth()+1)+pad(dt.getDate()),subs=[...new Set(lessonsOf(d).map(l=>l.s))];
+    h+=`<article class="gcard dz"><div class="dzh">${DAY[d]}, ${dt.getDate()} ${MON[dt.getMonth()]}</div>${subs.length?`<div class="sj">${subs.map(s=>`<span>${s}</span>`).join("")}</div>`:""}<textarea data-k="${k}" placeholder="Запиши сюди своє дз!">${LS(k)||""}</textarea></article>`;
+  }
+  box.innerHTML=h;
+}
+$("#hw").oninput=e=>{if(e.target.dataset.k)LS(e.target.dataset.k,e.target.value)};
+
+$("#nzTog").onclick=()=>{const b=$("#nzbox"),on=b.style.display==="none";b.style.display=on?"block":"none";$("#nzNote").style.display=on?"block":"none";if(on&&!$("#nz").getAttribute("src"))$("#nz").src="https://nz.ua";$("#nzTog").textContent=on?"Сховати «Нові знання»":"Відкрити «Нові знання» тут"};
+
 /* ---------- Вкладки ---------- */
-const MAP="https://map.ukrainealarm.com/",NAMES=["lessons","alerts","light"];let cur=0;
+const NAMES=["lessons","alerts","light","homework"];let cur=0;
 function go(i){
   const v=$$(".view");v[cur].classList.remove("on");
   v[i].style.setProperty("--dx",(i>=cur?"":"-")+"28px");void v[i].offsetWidth;v[i].classList.add("on");
   $("#pill").style.transform="translateX("+i*100+"%)";
   $$(".tabs button").forEach((b,k)=>{b.classList.toggle("a",k===i);k===i?b.setAttribute("aria-current","page"):b.removeAttribute("aria-current")});
-  if(i===1&&!$("#map").getAttribute("src"))$("#map").src=MAP;
+  cur=i;
+  if(i===1&&!$("#map").getAttribute("src"))$("#map").src=MAPS[mi];
   if(i===2)replay();
-  cur=i;history.replaceState(null,"","#"+NAMES[i]);scrollTo(0,0);
+  if(i===3)buildHw();
+  history.replaceState(null,"","#"+NAMES[i]);scrollTo(0,0);
 }
 $$(".tabs button").forEach(b=>b.onclick=()=>go(+b.dataset.t));
-$("#mapReload").onclick=()=>{const m=$("#map");m.src="about:blank";setTimeout(()=>m.src=MAP,60)};
 
 /* ---------- Тема ---------- */
 const root=document.documentElement,sv=LS("theme");if(sv)root.dataset.theme=sv;
 $("#theme").onclick=()=>{const dark=(root.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"))==="dark",n=dark?"light":"dark";root.dataset.theme=n;LS("theme",n)};
 
+/* ---------- Вступ і вибір класу ---------- */
+const step=n=>{$$(".step").forEach(s=>s.classList.remove("on"));$("#s"+n).classList.add("on")};
+let t1;
+function introTitle(){
+  let i=0;const words="Славутський ліцей Славутської міської ради".split(" ");
+  $("#ttl").innerHTML=words.map(w=>`<span class="fw">${[...w].map(c=>`<span class="fl" style="--i:${i++};--r:${(Math.random()*80-40)|0}deg">${c}</span>`).join("")}</span>`).join("");
+  step(1);
+  t1=setTimeout(()=>step(2),i*55+950+1500);
+}
+$("#s1").onclick=()=>{clearTimeout(t1);step(2)};
+$("#go").onclick=()=>step(4);
+$("#asStu").onclick=()=>showPicker();$("#asTea").onclick=()=>step(5);$("#tback").onclick=()=>step(4);$("#tstu").onclick=()=>showPicker();
+$("#tsend").onclick=()=>{const n=$("#tn").value.trim(),e=$("#te").value.trim(),sj=$("#ts").value.trim(),ok=/^[^\s@]+@gmail\.com$/i.test(e);
+  $("#terr").textContent=!n?"Вкажи ім’я":!ok?"Вкажи свій Gmail (…@gmail.com)":"";if(!n||!ok)return;
+  LS("t",{n,e,sj,st:"pending"});
+  location.href="mailto:ananko2011@gmail.com?subject="+encodeURIComponent("Заявка вчителя на доступ")+"&body="+encodeURIComponent("ПІБ: "+n+"\nGmail: "+e+"\nПредмет: "+sj);step(6)};
+for(const g of[10,11])$("#c"+g).innerHTML=CL[g].map((l,i)=>`<button style="--i:${i}" data-c="${g}-${l}">${g}-${l}</button>`).join("");
+function showPicker(){
+  $("#intro").classList.remove("out");$("#cancel").style.display=cls()?"":"none";
+  $$(".cg button").forEach(b=>b.classList.toggle("a",b.dataset.c===cls()));step(3);
+}
+$("#intro").onclick=e=>{
+  const b=e.target.closest("[data-c]");if(!b)return;
+  LS("cls",b.dataset.c);LS("seen",1);
+  if(b.dataset.c==="10-В"&&LS("grp")===null){GR=["3.1","5.1"];LS("grp",GR)}
+  selDay=null;lastKey=lastDay="";
+  $("#intro").classList.add("out");$("#cb").textContent=b.dataset.c;
+  tick();buildLight();if(cur===3)buildHw();
+};
+$("#cancel").onclick=()=>$("#intro").classList.add("out");
+$("#chg").onclick=()=>{scrollTo(0,0);showPicker()};
+
 /* ---------- Старт ---------- */
-buildLight();setSrc("load","Завантаження… · "+stamp());
-tick();setInterval(tick,1000);
+buildLight();setSrc("load","Завантаження… · "+stamp());setMap(mi,false);
+if(cls()){$("#intro").classList.add("out");$("#cb").textContent=cls();tick()}
+else if(LS("t")&&!LS("seen"))step(6);else if(LS("seen"))showPicker();else introTitle();
+setInterval(tick,1000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()});
 const h0=NAMES.indexOf(location.hash.slice(1));if(h0>0)go(h0);
 load();setInterval(load,600000);
