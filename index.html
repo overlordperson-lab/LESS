@@ -204,6 +204,82 @@ body:not([data-state=off]) .dial::before{animation-play-state:running}
 #intro.out::before,#intro.out::after{animation-play-state:paused}
 .mapbox.ok{animation:none;background:var(--card)}
 textarea{touch-action:manipulation}
+/* ===== v4: більше стилю та анімацій ===== */
+.top{animation:dropIn .8s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes dropIn{from{opacity:0;transform:translateY(-24px)}}
+.tabs{animation:tabsIn .9s .25s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes tabsIn{from{opacity:0;transform:translateX(-50%) translateY(140%)}}
+
+.orb{position:fixed;width:320px;height:320px;border-radius:50%;filter:blur(80px);opacity:.17;pointer-events:none;will-change:transform}
+.o1{background:var(--n3);left:-140px;top:38vh;animation:orb1 18s ease-in-out infinite alternate}
+.o2{background:var(--n2);right:-140px;bottom:8vh;animation:orb2 22s ease-in-out infinite alternate}
+@keyframes orb1{to{transform:translate(120px,-80px) scale(1.3)}}
+@keyframes orb2{to{transform:translate(-110px,70px) scale(1.25)}}
+
+.cb{position:relative;overflow:hidden}
+.cb::after{content:"";position:absolute;top:0;left:0;width:50%;height:100%;background:linear-gradient(100deg,transparent,#ffffff55,transparent);transform:translateX(-160%) skewX(-20deg);animation:shine 4.5s ease-in-out infinite}
+@keyframes shine{0%,55%{transform:translateX(-160%) skewX(-20deg)}100%{transform:translateX(320%) skewX(-20deg)}}
+
+.tabs button.a svg{animation:icon .6s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes icon{0%{transform:scale(.6) rotate(-20deg)}60%{transform:scale(1.2) rotate(6deg)}100%{transform:none}}
+.chips .a{animation:bnc .4s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes bnc{0%{transform:scale(.88)}60%{transform:scale(1.07)}}
+
+.view.on>:not(.dial):not(.subject):not(.mapbox){animation:rise .6s cubic-bezier(.2,.85,.25,1) both;animation-delay:calc(var(--k,0)*45ms)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+
+.sheet li{transition:background .25s,padding-left .25s}
+.sheet li:hover{padding-left:8px}
+
+.btn::before{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,#ffffff55,transparent);transform:skewX(-20deg);transition:left .6s;pointer-events:none}
+.btn:hover::before{left:130%}
+
+.fi.h{background-image:linear-gradient(90deg,var(--n1),var(--n2),var(--n3),var(--n1));background-size:200% 100%;animation:rw .7s var(--d,0s) both,gshift 6s linear infinite}
+@keyframes gshift{to{background-position:200% 0}}
+
+.soon{display:inline-block;margin-left:8px;padding:3px 10px;border-radius:99px;font:700 .68rem Unbounded,Onest,sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,var(--n3),var(--n1),var(--n3));background-size:200% 100%;animation:gshift 3s linear infinite;box-shadow:0 0 12px color-mix(in srgb,var(--n3) var(--gl),transparent);vertical-align:middle}
+.btn:disabled{opacity:.62;cursor:not-allowed;transform:none!important;box-shadow:none!important;filter:saturate(.6)}
+.btn:disabled::before{display:none}
+
+.gcard{position:relative}
+@media(hover:hover){
+  .gcard::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--n1) 18%,transparent),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+  .gcard:hover::before{opacity:1}
+}
+#theme:active{transform:rotate(360deg) scale(.9)}
+/* ===== v5: ще більше неону ===== */
+@property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+#fx{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none}
+#sweep{position:fixed;top:0;left:0;width:100%;height:3px;z-index:60;pointer-events:none;background:linear-gradient(90deg,transparent,var(--n1),var(--n2),transparent);box-shadow:0 0 16px var(--n1);transform:translateX(-100%);opacity:0}
+#sweep.go{animation:sweep .75s cubic-bezier(.4,0,.2,1)}
+@keyframes sweep{0%{transform:translateX(-100%);opacity:1}100%{transform:translateX(100%);opacity:1}}
+
+.gcard::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--a),transparent 0 55%,var(--n1),var(--n3),var(--n2),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask-composite:exclude;opacity:0;transition:opacity .35s;pointer-events:none;animation:ang 3s linear infinite;animation-play-state:paused}
+.gcard:hover::after,.gcard:focus-within::after{opacity:1;animation-play-state:running}
+@keyframes ang{to{--a:360deg}}
+
+.dial::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:1px dashed color-mix(in srgb,var(--accent) 55%,transparent);animation:spin 40s linear infinite reverse;animation-play-state:paused;pointer-events:none}
+body:not([data-state=off]) .dial::after{animation-play-state:running}
+
+.cn{font-style:normal;animation:blink 1s steps(2,start) infinite}
+@keyframes blink{to{opacity:.2}}
+
+.tabs button{transition:color .3s,transform .25s}
+.tabs button:hover{transform:translateY(-3px)}
+.chips button:hover{box-shadow:0 0 12px color-mix(in srgb,var(--n1) var(--gl),transparent);transform:translateY(-2px)}
+.cg button:hover{box-shadow:0 0 20px color-mix(in srgb,var(--n1) var(--gl),transparent)}
+#out:hover{border-color:var(--red);box-shadow:0 8px 24px color-mix(in srgb,var(--red) var(--gl),transparent)}
+#out.ask{border-color:var(--red);color:var(--red);animation:shake .4s}
+@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+.burst{position:fixed;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:2px solid var(--n1);box-shadow:0 0 24px var(--n1),inset 0 0 24px var(--n1);z-index:60;pointer-events:none;animation:burst 1s ease-out forwards}
+@keyframes burst{to{transform:scale(45);opacity:0}}
+#ttl.done .fl{animation:tglow 1.3s ease-out}
+@keyframes tglow{0%{text-shadow:0 0 0 transparent}35%{text-shadow:0 0 26px var(--n1),0 0 50px var(--n2);transform:scale(1.12)}100%{text-shadow:0 0 0 transparent}}
+
+.tt *,.tt *::before,.tt *::after{transition:background-color .5s,color .5s,border-color .5s,box-shadow .5s!important}
+
+
 
 /* повноекранний редактор Д/З */
 #ed{position:fixed;left:0;right:0;top:0;bottom:0;z-index:70;display:none;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
@@ -219,7 +295,8 @@ textarea{touch-action:manipulation}
 </style>
 </head>
 <body data-state="off">
-<div class="glow"></div>
+<div class="glow"></div><div class="orb o1"></div><div class="orb o2"></div>
+<canvas id="fx" aria-hidden="true"></canvas><div id="sweep"></div>
 
 <div id="intro">
   <div class="step" id="s1"><div id="ttl"></div></div>
@@ -239,9 +316,9 @@ textarea{touch-action:manipulation}
     <p class="fi h" style="--d:0s">Як ти хочеш увійти?</p>
     <div class="rb">
       <button class="btn fi" id="asStu" style="--d:.4s">🎒 Увійти як учень</button>
-      <button class="btn g fi" id="asTea" style="--d:.8s">🧑‍🏫 Увійти як вчитель</button>
+      <button class="btn g fi" id="asTea" style="--d:.8s" disabled aria-disabled="true" title="Скоро">🧑‍🏫 Увійти як вчитель <span class="soon">скоро</span></button>
     </div>
-    <p class="note fi" style="--d:1.2s">Учню реєстрація не потрібна: просто обери свій клас.</p>
+    <p class="note fi" style="--d:1.2s">Вхід для вчителів з’явиться скоро. Учню реєстрація не потрібна: просто обери свій клас.</p>
   </div>
   <div class="step" id="s5">
     <p class="fi h" style="--d:0s">Заявка вчителя</p>
@@ -280,7 +357,7 @@ textarea{touch-action:manipulation}
     <div class="lab"><span>08:30</span><span>16:20</span></div>
     <h2 id="dayTitle"></h2>
     <ol class="sheet" id="list"></ol>
-    <div class="row"><button class="btn g" id="chg">⇄ Змінити клас</button></div>
+    <div class="row"><button class="btn g" id="chg">⇄ Змінити клас</button><button class="btn g" id="out">⏻ Вийти</button></div>
     <p class="sig">by: К.А.А 10-В</p>
   </section>
 
@@ -401,7 +478,7 @@ function renderDay(d,hl){
 function tick(){
   if(!cls()||document.hidden)return;
   const now=new Date(),st=status(now),sec=now.getHours()*3600+now.getMinutes()*60+now.getSeconds();
-  setT(E.clock,pad(now.getHours())+":"+pad(now.getMinutes()));
+  {const ct=pad(now.getHours())+":"+pad(now.getMinutes());if(E.clock.dataset.v!==ct){E.clock.dataset.v=ct;E.clock.innerHTML=pad(now.getHours())+'<i class="cn">:</i>'+pad(now.getMinutes())}}
   setT(E.date,DAY[now.getDay()]+", "+now.getDate()+" "+MON[now.getMonth()]);
   if(document.body.dataset.state!==st.mode)document.body.dataset.state=st.mode;
   setT(E.state,st.state);setT(E.room,st.room||"");
@@ -544,6 +621,7 @@ function go(i){
   if(i===2)replay();
   if(i===3)buildHw();
   history.replaceState(null,"","#"+NAMES[i]);scrollTo(0,0);
+  {const sw=$("#sweep");sw.classList.remove("go");void sw.offsetWidth;sw.classList.add("go")}
 }
 $$(".tabs button").forEach(b=>b.onclick=()=>go(+b.dataset.t));
 
@@ -556,11 +634,11 @@ const step=n=>{$$(".step").forEach(s=>s.classList.remove("on"));$("#s"+n).classL
 let skipIntro=false;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms)),rnd=(a,b)=>a+Math.random()*(b-a);
 async function introTitle(){
-  skipIntro=false;
+  skipIntro=false;$("#ttl").classList.remove("done");
   const words="Славутський ліцей Славутської міської ради".split(" "),total=words.join("").length;let i=0;
-  $("#ttl").innerHTML=words.map(w=>`<span class="fw">${[...w].map(c=>{const p=Math.round(100-i++/total*100);return`<span class="fl" style="color:color-mix(in srgb,var(--blue) ${p}%,var(--green))">${c}</span>`}).join("")}</span>`).join("");
+  $("#ttl").innerHTML=words.map(w=>`<span class="fw">${[...w].map(c=>{const p=Math.round(100-i++/total*100);return`<span class="fl" style="opacity:0;color:color-mix(in srgb,var(--blue) ${p}%,var(--green))">${c}</span>`}).join("")}</span>`).join("");
   step(1);
-  if(matchMedia("(prefers-reduced-motion:reduce)").matches){await sleep(1500);if(!skipIntro)step(2);return}
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches){$$("#ttl .fl").forEach(e=>e.style.opacity=1);await sleep(1500);if(!skipIntro)step(2);return}
   await document.fonts.ready;
   const L=[...$$("#ttl .fl")],vw=innerWidth,vh=innerHeight,cx=vw/2,cy=vh*.58;
   // 1) букви сиплються згори в одну купу
@@ -575,15 +653,17 @@ async function introTitle(){
   });
   await Promise.all(fall);if(skipIntro)return;
   await sleep(700);if(skipIntro)return;
+  const bs=document.createElement("i");bs.className="burst";bs.style.left=cx+"px";bs.style.top=cy+"px";document.body.appendChild(bs);setTimeout(()=>bs.remove(),1200);
   // 2) коли всі висипались, збираються в напис
   await Promise.all(L.map(el=>el.animate([{transform:el._pile},{transform:"translate(0,0) rotate(0deg)"}],
     {duration:1200,delay:rnd(0,350),easing:"cubic-bezier(.3,1.4,.5,1)",fill:"both"}).finished));
   if(skipIntro)return;
+  $("#ttl").classList.add("done");
   await sleep(1400);if(!skipIntro)step(2);
 }
 $("#s1").onclick=()=>{skipIntro=true;step(2)};
 $("#go").onclick=()=>step(4);
-$("#asStu").onclick=()=>showPicker();$("#asTea").onclick=()=>step(5);$("#tback").onclick=()=>step(4);$("#tstu").onclick=()=>showPicker();
+$("#asStu").onclick=()=>showPicker();$("#tback").onclick=()=>step(4);$("#tstu").onclick=()=>showPicker();
 $("#tsend").onclick=()=>{const n=$("#tn").value.trim(),e=$("#te").value.trim(),sj=$("#ts").value.trim(),ok=/^[^\s@]+@gmail\.com$/i.test(e);
   $("#terr").textContent=!n?"Вкажи ім’я":!ok?"Вкажи свій Gmail (…@gmail.com)":"";if(!n||!ok)return;
   LS("t",{n,e,sj,st:"pending"});
@@ -634,7 +714,7 @@ if(window.visualViewport){const fit=()=>{if(ed.classList.contains("on")){ed.styl
 
 /* ---------- Ripple на кнопках ---------- */
 document.addEventListener("pointerdown",e=>{
-  const b=e.target.closest(".btn,.chips button,.cg button,.sj button,.seg2 button");if(!b)return;
+  const b=e.target.closest(".btn,.chips button,.cg button,.sj button,.seg2 button");if(!b||b.disabled)return;
   const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height)*2,i=document.createElement("i");
   i.className="rp";i.style.cssText="width:"+s+"px;height:"+s+"px;left:"+(e.clientX-r.left-s/2)+"px;top:"+(e.clientY-r.top-s/2)+"px";
   b.appendChild(i);setTimeout(()=>i.remove(),650);
@@ -642,6 +722,65 @@ document.addEventListener("pointerdown",e=>{
 
 /* ---------- Зупиняємо шимер, коли iframe завантажився ---------- */
 for(const id of["#map","#nz"]){const f=$(id);f.addEventListener("load",()=>{if(f.getAttribute("src")!=="about:blank")f.parentNode.classList.add("ok")})}
+
+/* ---------- Затримки появи елементів вкладок ---------- */
+$$(".view").forEach(v=>[...v.children].forEach((c,i)=>c.style.setProperty("--k",Math.min(i,10))));
+
+/* ---------- Підсвітка картки за курсором ---------- */
+document.addEventListener("pointermove",e=>{
+  if(e.pointerType==="touch")return;
+  const c=e.target.closest&&e.target.closest(".gcard");if(!c)return;
+  const r=c.getBoundingClientRect();
+  c.style.setProperty("--mx",(e.clientX-r.left)+"px");c.style.setProperty("--my",(e.clientY-r.top)+"px");
+},{passive:true});
+
+/* ---------- Вихід ---------- */
+let outT;
+$("#out").onclick=()=>{
+  const b=$("#out");
+  if(!b.classList.contains("ask")){
+    b.classList.add("ask");b.textContent="Точно вийти?";
+    clearTimeout(outT);outT=setTimeout(()=>{b.classList.remove("ask");b.textContent="⏻ Вийти"},3000);return;
+  }
+  clearTimeout(outT);b.classList.remove("ask");b.textContent="⏻ Вийти";
+  closeEd();
+  try{localStorage.removeItem("cls");localStorage.removeItem("seen")}catch(e){}
+  selDay=null;lastKey=lastDay="";$("#cb").textContent="";document.body.dataset.state="off";
+  if(cur!==0)go(0);scrollTo(0,0);
+  $("#intro").classList.remove("out");introTitle();
+};
+
+/* ---------- Плавна зміна теми ---------- */
+$("#theme").addEventListener("click",()=>{root.classList.add("tt");setTimeout(()=>root.classList.remove("tt"),700)});
+
+/* ---------- Неонові частинки на фоні ---------- */
+(function(){
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  const cv=$("#fx"),g=cv.getContext("2d");let W,H,dpr,mx=-999,my=-999,col=["#5aa2ff","#3dffb4","#c58bff"],t=0;
+  const N=innerWidth<600?26:44;
+  const size=()=>{dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0)};
+  const mk=i=>({x:Math.random()*W,y:Math.random()*H,r:rnd(1,2.6),v:rnd(.12,.5),ph:Math.random()*6.28,c:i%3,vx:0});
+  const colors=()=>{const cs=getComputedStyle(document.documentElement);col=["--n1","--n2","--n3"].map((k,i)=>cs.getPropertyValue(k).trim()||col[i])};
+  size();const P=Array.from({length:N},(_,i)=>mk(i));colors();
+  addEventListener("resize",size);
+  addEventListener("pointermove",e=>{mx=e.clientX;my=e.clientY},{passive:true});
+  $("#theme").addEventListener("click",()=>setTimeout(colors,80));
+  (function frame(){
+    t++;g.clearRect(0,0,W,H);
+    for(const p of P){
+      p.y-=p.v;p.x+=Math.sin(t/60+p.ph)*.25+p.vx;p.vx*=.95;
+      const dx=p.x-mx,dy=p.y-my,d2=dx*dx+dy*dy;
+      if(d2<9000){const d=Math.sqrt(d2)||1;p.vx+=dx/d*.35;p.y+=dy/d*.6}
+      if(p.y<-10){p.y=H+10;p.x=Math.random()*W}
+      if(p.x<-10)p.x=W+10;else if(p.x>W+10)p.x=-10;
+      const a=.35+.35*Math.sin(t/40+p.ph);
+      g.fillStyle=col[p.c];
+      g.globalAlpha=a*.18;g.beginPath();g.arc(p.x,p.y,p.r*4,0,6.283);g.fill();
+      g.globalAlpha=a;g.beginPath();g.arc(p.x,p.y,p.r,0,6.283);g.fill();
+    }
+    g.globalAlpha=1;requestAnimationFrame(frame);
+  })();
+})();
 
 /* ---------- Старт ---------- */
 buildLight();setSrc("load","Завантаження… · "+stamp());setMap(mi,false);
