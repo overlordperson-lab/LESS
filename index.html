@@ -127,6 +127,95 @@ input{font:400 1rem Onest,sans-serif;color:var(--ink);background:var(--card);bor
 .rb{display:grid;gap:12px;margin-top:10px}.rb .btn{padding:16px;font-size:1.05rem}.err{color:var(--red);font-weight:600;min-height:1.4em;margin:0 0 8px}
 button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* --- анімація літер: тепер її веде JS --- */
+.fl{animation:none;will-change:transform}
+#s1.on{animation:none}
+
+/* --- фон вступу --- */
+#intro::before,#intro::after{content:"";position:fixed;width:380px;height:380px;border-radius:50%;filter:blur(90px);opacity:.28;pointer-events:none;animation:drift 12s ease-in-out infinite alternate}
+#intro::before{background:var(--blue);top:-120px;left:-100px}
+#intro::after{background:var(--green);bottom:-140px;right:-100px;animation-delay:-6s}
+@keyframes drift{to{transform:translate(70px,50px) scale(1.25)}}
+.step{position:relative;z-index:1}
+.fi.h{background:linear-gradient(90deg,var(--blue),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* --- плавніші переходи між вкладками --- */
+@keyframes in{from{opacity:0;transform:translateX(var(--dx,28px)) scale(.98);filter:blur(6px)}}
+
+/* --- кнопки та картки --- */
+.btn{box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 16%,transparent)}
+.btn:active{transform:scale(.96)}
+.gcard{transition:transform .3s,box-shadow .3s}
+.gcard:hover{transform:translateY(-2px);box-shadow:0 12px 28px color-mix(in srgb,var(--ink) 12%,transparent)}
+.chips button:active,.cg button:active{transform:scale(.94)}
+
+/* --- предмети як маркери --- */
+.sj{gap:8px}
+.sj button{padding:7px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 .82rem Onest,sans-serif;cursor:pointer;transition:transform .2s,background .2s,color .2s,border-color .2s}
+.sj button:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sj button:active{transform:scale(.9)}
+textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 25%,transparent)}
+
+@media(prefers-reduced-motion:reduce){#intro::before,#intro::after{animation:none!important}}
+
+/* ===== v3: неон, анімації, оптимізація ===== */
+:root{--n1:#2f6bff;--n2:#00b878;--n3:#9a5cff;--gl:32%}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--n1:#5aa2ff;--n2:#3dffb4;--n3:#c58bff;--gl:75%}}
+:root[data-theme=dark]{--n1:#5aa2ff;--n2:#3dffb4;--n3:#c58bff;--gl:75%}
+
+.clock,.count{text-shadow:0 0 16px color-mix(in srgb,var(--accent) var(--gl),transparent)}
+.subject.pop{animation:pop .5s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98);filter:blur(4px)}}
+.cb{box-shadow:0 0 16px color-mix(in srgb,var(--n1) var(--gl),transparent)}
+.bar{filter:drop-shadow(0 0 5px var(--accent)) drop-shadow(0 0 14px color-mix(in srgb,var(--accent) var(--gl),transparent))}
+.dial svg{position:relative}
+.dial::before{content:"";position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 55%,var(--accent));filter:blur(16px);opacity:.35;animation:spin 7s linear infinite;animation-play-state:paused;will-change:transform}
+body:not([data-state=off]) .dial::before{animation-play-state:running}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chips .a{box-shadow:0 0 14px color-mix(in srgb,var(--n1) var(--gl),transparent)}
+.chips .a.t{box-shadow:inset 0 -3px 0 var(--red),0 0 14px color-mix(in srgb,var(--n1) var(--gl),transparent)}
+.blk.c{box-shadow:0 0 12px var(--accent)}
+.mk{box-shadow:0 0 8px var(--red)}
+.sheet .now{box-shadow:inset 3px 0 0 var(--accent)}
+.btn:hover{box-shadow:0 8px 24px color-mix(in srgb,var(--n1) var(--gl),transparent)}
+.btn.g:hover{border-color:var(--n1)}
+.sj button:hover{box-shadow:0 0 14px color-mix(in srgb,var(--n2) var(--gl),transparent)}
+.gcard:focus-within{border-color:var(--n1);box-shadow:0 0 0 1px var(--n1),0 0 26px color-mix(in srgb,var(--n1) var(--gl),transparent)}
+.seg{box-shadow:0 0 10px var(--red)}
+.nm{box-shadow:0 0 8px var(--ink)}
+.bdg{box-shadow:0 0 12px color-mix(in srgb,var(--green) var(--gl),transparent)}
+.bdg.x{box-shadow:0 0 12px color-mix(in srgb,var(--red) var(--gl),transparent)}
+.tabs{box-shadow:0 10px 30px #0003,0 0 22px color-mix(in srgb,var(--n3) 18%,transparent)}
+.pill{box-shadow:0 0 18px color-mix(in srgb,var(--n1) var(--gl),transparent)}
+.fi.h{filter:drop-shadow(0 0 10px color-mix(in srgb,var(--n1) var(--gl),transparent))}
+.view.on h2::after{content:"";display:block;height:2px;margin-top:6px;width:48px;border-radius:2px;background:linear-gradient(90deg,var(--n1),var(--n2));box-shadow:0 0 10px var(--n1);animation:grow .7s .1s both}
+@keyframes grow{from{width:0}}
+#hw .gcard:nth-child(2){animation-delay:.06s}#hw .gcard:nth-child(3){animation-delay:.12s}#hw .gcard:nth-child(4){animation-delay:.18s}#hw .gcard:nth-child(5){animation-delay:.24s}
+
+/* ripple */
+.btn,.chips button,.cg button,.sj button,.seg2 button{position:relative;overflow:hidden}
+.rp{position:absolute;border-radius:50%;background:color-mix(in srgb,var(--n1) 40%,transparent);transform:scale(0);animation:rpl .6s ease-out forwards;pointer-events:none}
+@keyframes rpl{to{transform:scale(1);opacity:0}}
+
+/* оптимізація: сховане не малюється і не анімується */
+#intro{transition:opacity .6s,visibility 0s}
+#intro.out{visibility:hidden;transition:opacity .6s,visibility 0s .6s}
+#intro.out::before,#intro.out::after{animation-play-state:paused}
+.mapbox.ok{animation:none;background:var(--card)}
+textarea{touch-action:manipulation}
+
+/* повноекранний редактор Д/З */
+#ed{position:fixed;left:0;right:0;top:0;bottom:0;z-index:70;display:none;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#ed.on{display:block;animation:edIn .35s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes edIn{from{opacity:0;transform:scale(.95) translateY(24px)}}
+.edc{height:100%;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.edh{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.edh b{font:700 1.05rem Unbounded,Onest,sans-serif}
+.edsj{flex-wrap:nowrap;overflow-x:auto;margin:0;padding-bottom:4px;scrollbar-width:none}
+.edsj::-webkit-scrollbar{display:none}
+.edsj button{flex:none}
+#edt{flex:1;min-height:0;margin:0;resize:none;font-size:1.1rem;line-height:1.55;border-color:var(--n1);box-shadow:0 0 0 1px var(--n1),0 0 28px color-mix(in srgb,var(--n1) var(--gl),transparent)}
 </style>
 </head>
 <body data-state="off">
@@ -135,11 +224,10 @@ button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible
 <div id="intro">
   <div class="step" id="s1"><div id="ttl"></div></div>
   <div class="step" id="s2">
-    <p class="fi h" style="--d:0s">Привіт, шановний учню! 👋</p>
-    <p class="fi" style="--d:.9s">Вітаю тебе на допоміжному сайті для учнів 10–11 класів Славутського ліцею Славутської міської ради.</p>
-    <p class="fi" style="--d:1.8s">Ти перебуваєш на сайті, розробником якого є <b>К.А.А 10-В</b>.</p>
-    <p class="fi" style="--d:2.7s">Сайт безкоштовний для кожного учня 10–11 класів.</p>
-    <button class="btn fi" id="go" style="--d:3.6s">Продовжити →</button>
+    <p class="fi h" style="--d:0s">Привіт! 👋</p>
+    <p class="fi" style="--d:.7s">Це зручний помічник для учнів 10–11 класів Славутського ліцею: <b>розклад і дзвінки, світло, тривоги та домашні завдання</b> — усе в одному місці.</p>
+    <p class="fi" style="--d:1.4s">Розробник — <b>К.А.А, 10-В</b>. Сайт безкоштовний для кожного учня.</p>
+    <button class="btn fi" id="go" style="--d:2.1s">Почати →</button>
   </div>
   <div class="step" id="s3">
     <p class="fi h" style="--d:0s">Обери свій клас</p>
@@ -238,6 +326,14 @@ button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible
   <button data-t="3"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM8 8h7M8 12h5"/></svg>Д/З</button>
 </nav>
 
+<div id="ed" role="dialog" aria-modal="true" aria-label="Редактор домашнього завдання">
+  <div class="edc">
+    <div class="edh"><b id="edTitle"></b><button class="btn s" id="edClose">Готово ✓</button></div>
+    <div class="sj edsj" id="edSj"></div>
+    <textarea id="edt" placeholder="Запиши сюди своє дз!"></textarea>
+  </div>
+</div>
+
 <script>
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s),pad=n=>String(n).padStart(2,"0"),hm=m=>pad(m/60|0)+":"+pad(m%60);
 const LS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
@@ -289,6 +385,8 @@ function status(now){
 
 /* ---------- Уроки ---------- */
 const C=2*Math.PI*90;let selDay=null,lastKey="",lastDay="";
+const E={clock:$("#clock"),date:$("#date"),state:$("#state"),subject:$("#subject"),room:$("#room"),count:$("#count"),cl:$("#cl"),foot:$("#foot"),bar:$("#bar")};
+const setT=(el,v)=>{if(el.textContent!==v){el.textContent=v;return true}return false};
 $("#ticks").innerHTML=Array.from({length:60},(_,i)=>{const a=i*Math.PI/30,r=i%5?106:102;return`<line class="tk${i%5?"":" m"}" x1="${110+Math.cos(a)*108}" y1="${110+Math.sin(a)*108}" x2="${110+Math.cos(a)*r}" y2="${110+Math.sin(a)*r}"/>`}).join("");
 $("#chips").innerHTML=[1,2,3,4,5].map(d=>`<button data-d="${d}">${SH[d]}</button>`).join("");
 $("#chips").onclick=e=>{const b=e.target.closest("button");if(b){selDay=+b.dataset.d===selDay?null:+b.dataset.d;lastDay="";tick()}};
@@ -301,14 +399,15 @@ function renderDay(d,hl){
 }
 
 function tick(){
-  if(!cls())return;
+  if(!cls()||document.hidden)return;
   const now=new Date(),st=status(now),sec=now.getHours()*3600+now.getMinutes()*60+now.getSeconds();
-  $("#clock").textContent=pad(now.getHours())+":"+pad(now.getMinutes());
-  $("#date").textContent=DAY[now.getDay()]+", "+now.getDate()+" "+MON[now.getMonth()];
-  document.body.dataset.state=st.mode;
-  $("#state").textContent=st.state;$("#subject").textContent=st.subject;$("#room").textContent=st.room||"";
-  $("#count").textContent=sch()?fmt(st.rem):"--:--";$("#cl").textContent=st.cl;$("#foot").textContent=st.foot;
-  $("#bar").style.strokeDashoffset=C*(1-(st.p==null?0:st.p));
+  setT(E.clock,pad(now.getHours())+":"+pad(now.getMinutes()));
+  setT(E.date,DAY[now.getDay()]+", "+now.getDate()+" "+MON[now.getMonth()]);
+  if(document.body.dataset.state!==st.mode)document.body.dataset.state=st.mode;
+  setT(E.state,st.state);setT(E.room,st.room||"");
+  if(setT(E.subject,st.subject)){E.subject.classList.remove("pop");void E.subject.offsetWidth;E.subject.classList.add("pop")}
+  setT(E.count,sch()?fmt(st.rem):"--:--");setT(E.cl,st.cl);setT(E.foot,st.foot);
+  E.bar.style.strokeDashoffset=C*(1-(st.p==null?0:st.p));
   const key=st.mode+st.hl;
   if(key!==lastKey){if(lastKey){const d=$("#dial");d.classList.remove("pulse");void d.offsetWidth;d.classList.add("pulse")}lastKey=key}
   const vd=selDay||st.day,dk=cls()+vd+"|"+(vd===st.day?st.hl:"");
@@ -366,9 +465,8 @@ function updLight(now){
   w.textContent=d&&(d.d!==now.getDate()||d.m!==now.getMonth())?"Увага: це графік на "+d.d+" "+MON[d.m]+", а не на сьогодні. Перевір сайт.":"";
 }
 
-// ОНОВЛЕНО: Більше проксі та послідовна перевірка
 async function tryUrl(u){
-  const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),8000); // Таймаут зменшено до 8 сек, щоб швидше переходити до наступного
+  const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),8000);
   try{
     const r=await fetch(u,{signal:ctl.signal});if(!r.ok)throw 0;
     let t=await r.text();
@@ -378,10 +476,9 @@ async function tryUrl(u){
 }
 
 async function load(){
+  if(document.hidden)return;
   setSrc("load","Оновлюю графік…");
   const e=encodeURIComponent(SRC),n="&_="+Date.now();
-  
-  // Розширений список проксі
   const urls=[
     "https://api.allorigins.win/raw?url="+e+n,
     "https://corsproxy.io/?"+e,
@@ -390,8 +487,6 @@ async function load(){
     "https://api.cors.lol/?url="+e,
     SRC
   ];
-
-  // Використовуємо Promise.any, щоб взяти найшвидший успішний
   try{
     const p=await Promise.any(urls.map(tryUrl));
     L={...p,at:Date.now(),src:"live"};LS("gpv",L);buildLight();setSrc("ok","Дані з hoe.com.ua · "+stamp());
@@ -406,23 +501,33 @@ const MAPS=["https://map.ukrainealarm.com/","https://neptun.in.ua/"];let mi=LS("
 function setMap(i,reload){
   mi=i;LS("map",i);$$("#mapsw button").forEach(b=>b.classList.toggle("a",+b.dataset.m===i));
   $("#mapOpen").href=MAPS[i];
-  if(cur===1||reload){const m=$("#map");m.src="about:blank";setTimeout(()=>m.src=MAPS[i],60)}
+  if(cur===1||reload){const m=$("#map");m.parentNode.classList.remove("ok");m.src="about:blank";setTimeout(()=>m.src=MAPS[i],60)}
 }
 $("#mapsw").onclick=e=>{const b=e.target.closest("button");if(b)setMap(+b.dataset.m,true)};
 $("#mapReload").onclick=()=>setMap(mi,true);
 
 /* ---------- Д/З ---------- */
 function buildHw(){
-  const now=new Date(),dow=now.getDay(),wk=dow===0||dow===6,from=wk?1:dow,box=$("#hw");
-  $("#hwInfo").textContent=wk?"Вихідні: показано наступний тиждень (пн–пт).":"Показано дні від сьогодні до п’ятниці (минулі дні приховано).";
+  const now=new Date(),dow=now.getDay(),wk=dow===0||dow===6,box=$("#hw");
+  const dt=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  if(dow===6)dt.setDate(dt.getDate()+2);else if(dow===0)dt.setDate(dt.getDate()+1);
+  $("#hwInfo").textContent=(wk?"Вихідні: показано наступний тиждень (пн–пт). ":"Показано сьогодні та наступні дні до п’ятниці. ")+"Натисни на предмет, щоб додати його в поле. Двічі торкнись поля, щоб відкрити його на весь екран.";
   let h="";
-  for(let d=from;d<=5;d++){
-    const dt=new Date(now);dt.setDate(now.getDate()+(dow===6?d+1:d-dow));
-    const k="hw|"+cls()+"|"+dt.getFullYear()+pad(dt.getMonth()+1)+pad(dt.getDate()),subs=[...new Set(lessonsOf(d).map(l=>l.s))];
-    h+=`<article class="gcard dz"><div class="dzh">${DAY[d]}, ${dt.getDate()} ${MON[dt.getMonth()]}</div>${subs.length?`<div class="sj">${subs.map(s=>`<span>${s}</span>`).join("")}</div>`:""}<textarea data-k="${k}" placeholder="Запиши сюди своє дз!">${LS(k)||""}</textarea></article>`;
+  while(dt.getDay()>=1&&dt.getDay()<=5){
+    const d=dt.getDay(),k="hw|"+cls()+"|"+dt.getFullYear()+pad(dt.getMonth()+1)+pad(dt.getDate()),
+      subs=[...new Set(lessonsOf(d).map(l=>l.s))];
+    h+=`<article class="gcard dz"><div class="dzh">${DAY[d]}, ${dt.getDate()} ${MON[dt.getMonth()]}${d===now.getDay()&&!wk?' <small class="rm" style="display:inline">· сьогодні</small>':""}</div>${subs.length?`<div class="sj">${subs.map(s=>`<button type="button" data-s="${s}">${s}</button>`).join("")}</div>`:""}<textarea data-k="${k}" placeholder="Запиши сюди своє дз!">${LS(k)||""}</textarea></article>`;
+    dt.setDate(dt.getDate()+1);
   }
   box.innerHTML=h;
 }
+$("#hw").onclick=e=>{
+  const b=e.target.closest(".sj button");if(!b)return;
+  const ta=b.closest(".dz").querySelector("textarea");
+  let v=ta.value;if(v&&!v.endsWith("\n"))v+="\n";
+  ta.value=v+b.dataset.s+": ";LS(ta.dataset.k,ta.value);
+  ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);ta.scrollTop=ta.scrollHeight;
+};
 $("#hw").oninput=e=>{if(e.target.dataset.k)LS(e.target.dataset.k,e.target.value)};
 
 $("#nzTog").onclick=()=>{const b=$("#nzbox"),on=b.style.display==="none";b.style.display=on?"block":"none";$("#nzNote").style.display=on?"block":"none";if(on&&!$("#nz").getAttribute("src"))$("#nz").src="https://nz.ua";$("#nzTog").textContent=on?"Сховати «Нові знання»":"Відкрити «Нові знання» тут"};
@@ -448,14 +553,35 @@ $("#theme").onclick=()=>{const dark=(root.dataset.theme||(matchMedia("(prefers-c
 
 /* ---------- Вступ і вибір класу ---------- */
 const step=n=>{$$(".step").forEach(s=>s.classList.remove("on"));$("#s"+n).classList.add("on")};
-let t1;
-function introTitle(){
-  let i=0;const words="Славутський ліцей Славутської міської ради".split(" ");
-  $("#ttl").innerHTML=words.map(w=>`<span class="fw">${[...w].map(c=>`<span class="fl" style="--i:${i++};--r:${(Math.random()*80-40)|0}deg">${c}</span>`).join("")}</span>`).join("");
+let skipIntro=false;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms)),rnd=(a,b)=>a+Math.random()*(b-a);
+async function introTitle(){
+  skipIntro=false;
+  const words="Славутський ліцей Славутської міської ради".split(" "),total=words.join("").length;let i=0;
+  $("#ttl").innerHTML=words.map(w=>`<span class="fw">${[...w].map(c=>{const p=Math.round(100-i++/total*100);return`<span class="fl" style="color:color-mix(in srgb,var(--blue) ${p}%,var(--green))">${c}</span>`}).join("")}</span>`).join("");
   step(1);
-  t1=setTimeout(()=>step(2),i*55+950+1500);
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches){await sleep(1500);if(!skipIntro)step(2);return}
+  await document.fonts.ready;
+  const L=[...$$("#ttl .fl")],vw=innerWidth,vh=innerHeight,cx=vw/2,cy=vh*.58;
+  // 1) букви сиплються згори в одну купу
+  const fall=L.map((el,k)=>{
+    const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2,
+      px=cx+rnd(-70,70)-x,py=cy+rnd(-35,35)-y,rot=rnd(-300,300);
+    el._pile=`translate(${px}px,${py}px) rotate(${rot}deg)`;
+    return el.animate([
+      {opacity:0,transform:`translate(${px+rnd(-vw*.35,vw*.35)}px,${-y-120}px) rotate(${rot-360}deg)`},
+      {opacity:1,transform:el._pile}
+    ],{duration:rnd(800,1100),delay:k*45+rnd(0,120),easing:"cubic-bezier(.3,.8,.4,1.15)",fill:"both"}).finished;
+  });
+  await Promise.all(fall);if(skipIntro)return;
+  await sleep(700);if(skipIntro)return;
+  // 2) коли всі висипались, збираються в напис
+  await Promise.all(L.map(el=>el.animate([{transform:el._pile},{transform:"translate(0,0) rotate(0deg)"}],
+    {duration:1200,delay:rnd(0,350),easing:"cubic-bezier(.3,1.4,.5,1)",fill:"both"}).finished));
+  if(skipIntro)return;
+  await sleep(1400);if(!skipIntro)step(2);
 }
-$("#s1").onclick=()=>{clearTimeout(t1);step(2)};
+$("#s1").onclick=()=>{skipIntro=true;step(2)};
 $("#go").onclick=()=>step(4);
 $("#asStu").onclick=()=>showPicker();$("#asTea").onclick=()=>step(5);$("#tback").onclick=()=>step(4);$("#tstu").onclick=()=>showPicker();
 $("#tsend").onclick=()=>{const n=$("#tn").value.trim(),e=$("#te").value.trim(),sj=$("#ts").value.trim(),ok=/^[^\s@]+@gmail\.com$/i.test(e);
@@ -478,12 +604,51 @@ $("#intro").onclick=e=>{
 $("#cancel").onclick=()=>$("#intro").classList.add("out");
 $("#chg").onclick=()=>{scrollTo(0,0);showPicker()};
 
+/* ---------- Повноекранний редактор Д/З (подвійний клік / дотик) ---------- */
+const ed=$("#ed"),edt=$("#edt");let edTa=null,lastTap={t:0,x:0,y:0,el:null};
+const edSave=()=>{if(edTa)LS(edTa.dataset.k,edt.value)};
+const edEnd=()=>edt.setSelectionRange(edt.value.length,edt.value.length);
+function openEd(ta){
+  edTa=ta;const card=ta.closest(".dz");
+  $("#edTitle").textContent=card.querySelector(".dzh").firstChild.textContent.trim();
+  const sj=card.querySelector(".sj");$("#edSj").innerHTML=sj?sj.innerHTML:"";$("#edSj").style.display=sj?"":"none";
+  edt.value=ta.value;ed.classList.add("on");document.body.style.overflow="hidden";
+  edt.focus();edEnd();
+}
+function closeEd(){
+  if(!edTa)return;
+  edTa.value=edt.value;edSave();edTa=null;
+  ed.classList.remove("on");ed.style.cssText="";document.body.style.overflow="";
+}
+edt.oninput=edSave;
+$("#edClose").onclick=closeEd;
+$("#edSj").onclick=e=>{const b=e.target.closest("button");if(!b||!edTa)return;let v=edt.value;if(v&&!v.endsWith("\n"))v+="\n";edt.value=v+b.dataset.s+": ";edSave();edt.focus();edEnd();edt.scrollTop=edt.scrollHeight};
+addEventListener("keydown",e=>{if(e.key==="Escape")closeEd()});
+$("#hw").addEventListener("pointerup",e=>{
+  const ta=e.target.closest("textarea");if(!ta)return;
+  const n=performance.now();
+  if(lastTap.el===ta&&n-lastTap.t<380&&Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<30){lastTap.el=null;openEd(ta);return}
+  lastTap={t:n,x:e.clientX,y:e.clientY,el:ta};
+});
+if(window.visualViewport){const fit=()=>{if(ed.classList.contains("on")){ed.style.bottom="auto";ed.style.height=visualViewport.height+"px";ed.style.top=visualViewport.offsetTop+"px"}};visualViewport.addEventListener("resize",fit);visualViewport.addEventListener("scroll",fit)}
+
+/* ---------- Ripple на кнопках ---------- */
+document.addEventListener("pointerdown",e=>{
+  const b=e.target.closest(".btn,.chips button,.cg button,.sj button,.seg2 button");if(!b)return;
+  const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height)*2,i=document.createElement("i");
+  i.className="rp";i.style.cssText="width:"+s+"px;height:"+s+"px;left:"+(e.clientX-r.left-s/2)+"px;top:"+(e.clientY-r.top-s/2)+"px";
+  b.appendChild(i);setTimeout(()=>i.remove(),650);
+},{passive:true});
+
+/* ---------- Зупиняємо шимер, коли iframe завантажився ---------- */
+for(const id of["#map","#nz"]){const f=$(id);f.addEventListener("load",()=>{if(f.getAttribute("src")!=="about:blank")f.parentNode.classList.add("ok")})}
+
 /* ---------- Старт ---------- */
 buildLight();setSrc("load","Завантаження… · "+stamp());setMap(mi,false);
 if(cls()){$("#intro").classList.add("out");$("#cb").textContent=cls();tick()}
 else if(LS("t")&&!LS("seen"))step(6);else if(LS("seen"))showPicker();else introTitle();
 setInterval(tick,1000);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){tick();if(L.src==="live"&&Date.now()-L.at>300000)load()}});
 const h0=NAMES.indexOf(location.hash.slice(1));if(h0>0)go(h0);
 load();setInterval(load,600000);
 </script>
